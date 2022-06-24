@@ -6,7 +6,7 @@ const fontFaces = css`
     font-family: 'Adobe Clean';
     font-style: normal;
     font-stretch: normal;
-    src: url('/public/fonts/adobe-clean/AdobeClean-Light.woff2') format('woff2');
+    src: url('/fonts/adobe-clean/AdobeClean-Light.woff2') format('woff2');
 
     font-display: swap;
   }
@@ -16,7 +16,7 @@ const fontFaces = css`
     font-family: 'Adobe Clean';
     font-style: italic;
     font-stretch: normal;
-    src: url('/public/fonts/adobe-clean/AdobeClean-LightIt.woff2')
+    src: url('/fonts/adobe-clean/AdobeClean-LightIt.woff2')
       format('woff2');
 
     font-display: swap;
@@ -27,7 +27,7 @@ const fontFaces = css`
     font-family: 'Adobe Clean';
     font-style: normal;
     font-stretch: normal;
-    src: url('/public/fonts/adobe-clean/AdobeClean-SemiLight.woff2')
+    src: url('/fonts/adobe-clean/AdobeClean-SemiLight.woff2')
       format('woff2');
 
     font-display: swap;
@@ -38,7 +38,7 @@ const fontFaces = css`
     font-family: 'Adobe Clean';
     font-style: italic;
     font-stretch: normal;
-    src: url('/public/fonts/adobe-clean/AdobeClean-SemiLightIt.woff2')
+    src: url('/fonts/adobe-clean/AdobeClean-SemiLightIt.woff2')
       format('woff2');
 
     font-display: swap;
@@ -49,7 +49,7 @@ const fontFaces = css`
     font-family: 'Adobe Clean';
     font-style: normal;
     font-stretch: normal;
-    src: url('/public/fonts/adobe-clean/AdobeClean-Regular.woff2')
+    src: url('/fonts/adobe-clean/AdobeClean-Regular.woff2')
       format('woff2');
 
     font-display: swap;
@@ -60,7 +60,7 @@ const fontFaces = css`
     font-family: 'Adobe Clean';
     font-style: italic;
     font-stretch: normal;
-    src: url('/public/fonts/adobe-clean/AdobeClean-It.woff2') format('woff2');
+    src: url('/fonts/adobe-clean/AdobeClean-It.woff2') format('woff2');
 
     font-display: swap;
   }
@@ -70,7 +70,7 @@ const fontFaces = css`
     font-family: 'Adobe Clean';
     font-style: normal;
     font-stretch: normal;
-    src: url('/public/fonts/adobe-clean/AdobeClean-Bold.woff2') format('woff2');
+    src: url('/fonts/adobe-clean/AdobeClean-Bold.woff2') format('woff2');
 
     font-display: swap;
   }
@@ -80,7 +80,7 @@ const fontFaces = css`
     font-family: 'Adobe Clean';
     font-style: italic;
     font-stretch: normal;
-    src: url('/public/fonts/adobe-clean/AdobeClean-BoldIt.woff2')
+    src: url('/fonts/adobe-clean/AdobeClean-BoldIt.woff2')
       format('woff2');
 
     font-display: swap;
@@ -91,7 +91,7 @@ const fontFaces = css`
     font-family: 'Adobe Clean';
     font-style: normal;
     font-stretch: normal;
-    src: url('/public/fonts/adobe-clean/AdobeClean-ExtraBold.woff2')
+    src: url('/fonts/adobe-clean/AdobeClean-ExtraBold.woff2')
       format('woff2');
 
     font-display: swap;
@@ -102,7 +102,7 @@ const fontFaces = css`
     font-family: 'Adobe Clean';
     font-style: italic;
     font-stretch: normal;
-    src: url('/public/fonts/adobe-clean/AdobeClean-ExtraBoldIt.woff2')
+    src: url('/fonts/adobe-clean/AdobeClean-ExtraBoldIt.woff2')
       format('woff2');
 
     font-display: swap;
@@ -113,7 +113,7 @@ const fontFaces = css`
     font-family: 'Adobe Clean';
     font-style: normal;
     font-stretch: normal;
-    src: url('/public/fonts/adobe-clean/AdobeClean-Black.woff2') format('woff2');
+    src: url('/fonts/adobe-clean/AdobeClean-Black.woff2') format('woff2');
 
     font-display: swap;
   }
@@ -123,7 +123,7 @@ const fontFaces = css`
     font-family: 'Adobe Clean';
     font-style: italic;
     font-stretch: normal;
-    src: url('/public/fonts/adobe-clean/AdobeClean-BlackIt.woff2')
+    src: url('/fonts/adobe-clean/AdobeClean-BlackIt.woff2')
       format('woff2');
 
     font-display: swap;
@@ -134,7 +134,7 @@ const fontFaces = css`
     font-family: 'Adobe Clean';
     font-style: normal;
     font-stretch: condensed;
-    src: url('/public/fonts/adobe-clean/AdobeClean-Cond.woff2') format('woff2');
+    src: url('/fonts/adobe-clean/AdobeClean-Cond.woff2') format('woff2');
 
     font-display: swap;
   }
@@ -144,7 +144,7 @@ const fontFaces = css`
     font-family: 'Adobe Clean';
     font-style: italic;
     font-stretch: condensed;
-    src: url('/public/fonts/adobe-clean/AdobeClean-CondIt.woff2')
+    src: url('/fonts/adobe-clean/AdobeClean-CondIt.woff2')
       format('woff2');
 
     font-display: swap;
@@ -155,7 +155,7 @@ const fontFaces = css`
     font-family: 'Adobe Clean';
     font-style: normal;
     font-stretch: condensed;
-    src: url('/public/fonts/adobe-clean/AdobeClean-BoldCond.woff2')
+    src: url('/fonts/adobe-clean/AdobeClean-BoldCond.woff2')
       format('woff2');
 
     font-display: swap;
@@ -166,7 +166,7 @@ const fontFaces = css`
     font-family: 'Adobe Clean';
     font-style: italic;
     font-stretch: condensed;
-    src: url('/public/fonts/adobe-clean/AdobeClean-BoldCondIt.woff2')
+    src: url('/fonts/adobe-clean/AdobeClean-BoldCondIt.woff2')
       format('woff2');
 
     font-display: swap;
@@ -177,7 +177,7 @@ const fontFaces = css`
     font-family: 'Adobe Clean';
     font-style: normal;
     font-stretch: semi-condensed;
-    src: url('/public/fonts/adobe-clean/AdobeClean-SemiCn.woff2')
+    src: url('/fonts/adobe-clean/AdobeClean-SemiCn.woff2')
       format('woff2');
 
     font-display: swap;
@@ -188,7 +188,7 @@ const fontFaces = css`
     font-family: 'Adobe Clean';
     font-style: italic;
     font-stretch: semi-condensed;
-    src: url('/public/fonts/adobe-clean/AdobeClean-SemiCnIt.woff2')
+    src: url('/fonts/adobe-clean/AdobeClean-SemiCnIt.woff2')
       format('woff2');
 
     font-display: swap;
@@ -199,7 +199,7 @@ const fontFaces = css`
     font-family: 'Adobe Clean';
     font-style: normal;
     font-stretch: semi-condensed;
-    src: url('/public/fonts/adobe-clean/AdobeClean-BoldSemiCn.woff2')
+    src: url('/fonts/adobe-clean/AdobeClean-BoldSemiCn.woff2')
       format('woff2');
 
     font-display: swap;
@@ -210,7 +210,7 @@ const fontFaces = css`
     font-family: 'Adobe Clean';
     font-style: italic;
     font-stretch: semi-condensed;
-    src: url('/public/fonts/adobe-clean/AdobeClean-BoldSemiCnIt.woff2')
+    src: url('/fonts/adobe-clean/AdobeClean-BoldSemiCnIt.woff2')
       format('woff2');
 
     font-display: swap;

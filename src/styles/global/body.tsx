@@ -24,6 +24,7 @@ export const Body = () => {
           padding: 0;
 
           font-size: 16px !important;
+          hyphens: manual;
 
           font-kerning: normal !important;
           font-variant-ligatures: common-ligatures !important;
