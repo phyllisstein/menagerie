@@ -29,13 +29,13 @@ function SandboxApp ({ Component, pageProps }: AppProps) {
       <AdobeClean />
 
       <Script
-        src='/hyphenopoly/Hyphenopoly_Loader.js'
+        src='/assets/hyphenopoly/Hyphenopoly_Loader.js'
         strategy='lazyOnload'
         onLoad={ () => {
           window.Hyphenopoly.config({
             paths: {
-              maindir: '/hyphenopoly/',
-              patterndir: '/hyphenopoly/',
+              maindir: '/assets/hyphenopoly/',
+              patterndir: '/assets/hyphenopoly/',
             },
             require: {
               'en-us': 'FORCEHYPHENOPOLY',
