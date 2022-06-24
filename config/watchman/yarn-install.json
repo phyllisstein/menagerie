@@ -1,0 +1,17 @@
+[
+  "trigger",
+  "/app",
+  {
+    "name": "yarn-install",
+    "expression": [
+      "name",
+      "package.json",
+      "wholename"
+    ],
+    "command": [
+      "./bin/develop.sh",
+      "yarn"
+    ],
+    "append_files": false
+  }
+]

@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+    init: true
+    environment:
+      - VIRTUAL_HOST=sandbox.duet.here
+    expose:
+      - '80'
+    networks:
+      - default
+      - nginx-proxy
+    extra_hosts:
+      - 'sandbox.duet.here:127.0.0.1'
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+      - type: volume
+        source: node_modules
+        target: /app/node_modules
+        volume:
+          nocopy: true
+      - type: volume
+        source: yarn_cache
+        target: /var/cache/yarn
+    secrets:
+      - environment
+
+volumes:
+  node_modules:
+  yarn_cache:
+
+networks:
+  default:
+  nginx-proxy:
+    external: true
+    name: nginx-proxy
+
+secrets:
+  environment:
+    file: .env
