@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 238.7746 170.5764">
+    <defs>
+        <style>
+            .f150d619-51f2-4a32-aecd-d1d88923a508{isolation:isolate;}.bd056c3c-cbd2-45e2-80de-67e780c9078c{mix-blend-mode:multiply;}.b1715c1c-0562-4a4c-b0fb-1880b91b27c6{fill:url(#e240d0d0-13de-492f-a172-fc4dd4f1c36d);}
+        </style>
+        <radialGradient id="e240d0d0-13de-492f-a172-fc4dd4f1c36d" cx="-2581.526" cy="-712.7318" r="231.9144"
+                        gradientTransform="matrix(-0.8171, -0.5766, 0.5766, -0.8171, -1700.3188, -1997.6599)"
+                        gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#fff"/>
+            <stop offset="0.5348" stop-color="#ceb7e2"/>
+            <stop offset="1" stop-color="#ec38bc"/>
+        </radialGradient>
+    </defs>
+    <g class="f150d619-51f2-4a32-aecd-d1d88923a508">
+        <g id="b45401c2-1446-4cfb-b2a5-c41ce8d04443" data-name="Layer 1">
+            <g class="bd056c3c-cbd2-45e2-80de-67e780c9078c">
+                <path class="b1715c1c-0562-4a4c-b0fb-1880b91b27c6"
+                      d="M187.4112,21.6864a121.2135,121.2135,0,0,1,47.4463,129.5591,25.9446,25.9446,0,0,1-50.1718-13.24,68.2424,68.2424,0,0,0-8.084-53.5738A67.0819,67.0819,0,0,0,81.005,63.6674a68.2874,68.2874,0,0,0-29.5073,45.0512A25.9443,25.9443,0,1,1,.4,99.6937,120.982,120.982,0,0,1,144,2.5834,118.4753,118.4753,0,0,1,187.4112,21.6864Z"/>
+            </g>
+        </g>
+    </g>
+</svg>
