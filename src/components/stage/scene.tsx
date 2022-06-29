@@ -1,8 +1,7 @@
-import R from 'ramda'
+import * as R from 'ramda'
 import {
   Children,
   CSSProperties,
-  FunctionComponent,
   memo,
   ReactNode,
   useContext,

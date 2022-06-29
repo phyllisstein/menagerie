@@ -23,12 +23,12 @@ export const Body = () => {
           margin: 0;
           padding: 0;
 
-          font-size: 16px !important;
+          font-size: 16px;
           hyphens: manual;
 
-          font-kerning: normal !important;
-          font-variant-ligatures: common-ligatures !important;
-          font-variant-numeric: oldstyle-nums proportional-nums !important;
+          font-kerning: normal;
+          font-variant-ligatures: common-ligatures;
+          font-variant-numeric: oldstyle-nums proportional-nums;
         }
 
         body {

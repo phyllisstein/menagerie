@@ -1,7 +1,7 @@
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 import { canUseDOM } from 'exenv'
 import { debounce, defaults } from 'lodash/fp'
-import R from 'ramda'
+import * as R from 'ramda'
 import {
   Children,
   createContext,

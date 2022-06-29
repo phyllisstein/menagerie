@@ -1,21 +1,6 @@
+import { useTheme } from '@emotion/react'
 import { faHeartBroken } from '@fortawesome/pro-duotone-svg-icons/faHeartBroken'
 import { ReactElement, useCallback, useState } from 'react'
-
-import dylan from '/assets/matrix/dylan.jpg'
-import gallo from '/assets/matrix/gallo.png'
-import ghery from '/assets/matrix/ghery.png'
-import ghostling from '/assets/matrix/ghostling.png'
-import gta from '/assets/matrix/gtasa.jpg'
-import housewives from '/assets/matrix/housewives.png'
-import locas from '/assets/matrix/locas.jpg'
-import madge from '/assets/matrix/madge.png'
-import Madge from '/assets/matrix/madge.svg'
-import malcolmGladwell from '/assets/matrix/MalcolmGladwell.png'
-import purpleHeart from '/assets/matrix/purple-heart.png'
-import reynolds from '/assets/matrix/reynolds.png'
-import trucker from '/assets/matrix/trucker.png'
-import twenty from '/assets/matrix/twenty.jpg'
-import washington from '/assets/matrix/washington.jpg'
 
 import { DotPosition, EntryText } from 'components/matrix'
 import { Scene, Stage, Transform } from 'components/stage'
@@ -26,11 +11,12 @@ import {
   Label,
   LineX,
   LineY,
+  Madge,
   PulsingIcon,
   Wrapper,
 } from 'styles/pages/matrix'
 
-export function ApprovalMatrix (): ReactElement {
+export default function ApprovalMatrix (): ReactElement {
   const [step, setStep] = useState(1)
 
   const toggleCurrentStep = useCallback(
@@ -46,6 +32,8 @@ export function ApprovalMatrix (): ReactElement {
     },
     [step],
   )
+
+  const theme = useTheme()
 
   return (
     <Wrapper>
@@ -97,7 +85,7 @@ export function ApprovalMatrix (): ReactElement {
               <strong>Madonna</strong>, Oxford student.
             </EntryText>
             <Image
-              src={ madge }
+              src='/assets/matrix/madge.png'
               style={{ clipPath: `url('#madge_svg__madge')` }} />
             <Madge />
           </Entry>
@@ -123,7 +111,7 @@ export function ApprovalMatrix (): ReactElement {
               </strong>{ ' ' }
               hair ignites: Geek schadenfreude erupts.
             </EntryText>
-            <Image src={ malcolmGladwell } />
+            <Image src='/assets/matrix/MalcolmGladwell.png' />
           </Entry>
         </Scene>
         <Scene onClick={ toggleCurrentStep(6) }>
@@ -145,7 +133,7 @@ export function ApprovalMatrix (): ReactElement {
             <EntryText>
               <strong>MoMA</strong> charges $20.
             </EntryText>
-            <Image src={ twenty } />
+            <Image src='/assets/matrix/twenty.jpg' />
           </Entry>
         </Scene>
         <Scene onClick={ toggleCurrentStep(8) }>
@@ -158,7 +146,7 @@ export function ApprovalMatrix (): ReactElement {
               <strong>Bob Dylan</strong> bio. Poignant! Idiosyncratic! And full
               of New York trivia.
             </EntryText>
-            <Image src={ dylan } />
+            <Image src='/assets/matrix/dylan.jpg' />
           </Entry>
         </Scene>
         <Scene onClick={ toggleCurrentStep(9) }>
@@ -173,7 +161,7 @@ export function ApprovalMatrix (): ReactElement {
             <EntryText>
               <strong>Quickie marriages.</strong>
             </EntryText>
-            <Image src={ trucker } />
+            <Image src='/assets/matrix/trucker.png' />
           </Entry>
         </Scene>
         <Scene onClick={ toggleCurrentStep(10) }>
@@ -195,7 +183,9 @@ export function ApprovalMatrix (): ReactElement {
               <strong>Halloween Parade:</strong> People think it's gross and
               tacky. (It's still fun.)
             </EntryText>
-            <Image src={ ghostling } style={{ maxHeight: 256 }} />
+            <Image
+              src='/assets/matrix/ghostling.png'
+              style={{ maxHeight: 256 }} />
           </Entry>
         </Scene>
         <Scene onClick={ toggleCurrentStep(12) }>
@@ -207,7 +197,7 @@ export function ApprovalMatrix (): ReactElement {
             <EntryText>
               <strong>Grand Theft Auto: San Andreas.</strong> Vroom.
             </EntryText>
-            <Image src={ gta } />
+            <Image src='/assets/matrix/gtsa.jpg' />
           </Entry>
         </Scene>
         <Scene onClick={ toggleCurrentStep(13) }>
@@ -226,7 +216,7 @@ export function ApprovalMatrix (): ReactElement {
             <PulsingIcon
               icon={ faHeartBroken }
               size='3x'
-              style={{ color: css.red700 }} />
+              style={{ color: theme.paletteLight.css.red700 }} />
           </Entry>
         </Scene>
         <Scene onClick={ toggleCurrentStep(14) }>
@@ -239,7 +229,7 @@ export function ApprovalMatrix (): ReactElement {
               <strong>His Excellency: George Washington</strong>, by{ ' ' }
               <em>Founding Brothers</em> author Joseph J. Ellis.
             </EntryText>
-            <Image src={ washington } />
+            <Image src='/assets/matrix/washington.jpg' />
           </Entry>
         </Scene>
         <Scene onClick={ toggleCurrentStep(15) }>
@@ -249,7 +239,7 @@ export function ApprovalMatrix (): ReactElement {
             <EntryText>
               <strong>Ghery</strong> picked for WTC performing-arts center.
             </EntryText>
-            <Image src={ ghery } />
+            <Image src='/assets/matrix/ghery.png' />
           </Entry>
         </Scene>
         <Scene onClick={ toggleCurrentStep(16) }>
@@ -265,7 +255,7 @@ export function ApprovalMatrix (): ReactElement {
               <em>Melrose</em>-like genius, plus a career boost for Felicity
               Huffman.
             </EntryText>
-            <Image src={ housewives } />
+            <Image src='/assets/matrix/housewives.png' />
           </Entry>
         </Scene>
         <Scene onClick={ toggleCurrentStep(17) }>
@@ -280,7 +270,7 @@ export function ApprovalMatrix (): ReactElement {
               </strong>
               .
             </EntryText>
-            <Image src={ locas } />
+            <Image src='/assets/matrix/locas.jpg' />
           </Entry>
         </Scene>
         <Scene onClick={ toggleCurrentStep(18) }>
@@ -292,7 +282,7 @@ export function ApprovalMatrix (): ReactElement {
               as Boss Hogg in <em>Dukes of Hazzard</em> movie. Toupée makers,
               rejoice.
             </EntryText>
-            <Image src={ reynolds } />
+            <Image src='/assets/matrix/reynolds.png' />
           </Entry>
         </Scene>
         <Scene onClick={ toggleCurrentStep(19) }>
@@ -304,7 +294,9 @@ export function ApprovalMatrix (): ReactElement {
               <strong>Stolen Honor: Wounds That Never Heal:</strong>
               Sinclair flip-flops on anti-Kerry doc.
             </EntryText>
-            <Image src={ purpleHeart } style={{ height: 'auto', width: 256 }} />
+            <Image
+              src='/assets/matrix/purple-heart.png'
+              style={{ height: 'auto', width: 256 }} />
           </Entry>
         </Scene>
         <Scene onClick={ toggleCurrentStep(20) }>
@@ -318,7 +310,7 @@ export function ApprovalMatrix (): ReactElement {
               <strong>Vincent Gallo</strong>, strutting, mutton-chopped Rasputin
               of indie cinema.
             </EntryText>
-            <Image src={ gallo } />
+            <Image src='/assets/matrix/gallo.png' />
           </Entry>
         </Scene>
       </Stage>

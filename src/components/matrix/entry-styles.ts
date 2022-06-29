@@ -10,7 +10,7 @@ interface RootProps {
 }
 
 export const DotIcon = styled(FontAwesomeIcon)`
-  color: ${ ({ theme }) => theme.palette.css.gray900 };
+  color: ${ ({ theme }) => theme.paletteDark.css.gray900 };
 `
 
 export const Root = styled.div<RootProps>`

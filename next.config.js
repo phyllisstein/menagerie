@@ -7,10 +7,11 @@ module.exports = {
   experimental: {
     concurrentFeatures: true,
     concurrentMode: true,
-    serverComponents: true,
   },
   compiler: {
-    emotion: true,
+    emotion: {
+      labelFormat: '[local]--[dirname]--[filename]',
+    },
   },
   jsConfig: {
     compilerOptions: {
