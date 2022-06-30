@@ -83,19 +83,19 @@ const getPlumber = ({
 
     const gridFontSize = scaledFontSize * gridHeightValue
     const marginTop = `${
-      (leadingTop - shift) * gridHeightValue
+      round(leadingTop - shift) * gridHeightValue
     }${ gridHeightUnit }`
     const paddingTop = `${
-      (shift - baselineDifference) * gridHeightValue
+      round(shift - baselineDifference) * gridHeightValue
     }${ gridHeightUnit }`
     const paddingBottom = `${
-      (1 - shift + baselineDifference) * gridHeightValue
+      round(1 - shift + baselineDifference) * gridHeightValue
     }${ gridHeightUnit }`
     const marginBottom = `${
-      (leadingBottom + shift - 1) * gridHeightValue
+      round(leadingBottom + shift - 1) * gridHeightValue
     }${ gridHeightUnit }`
-    const fontSizeWithUnit = `${ gridFontSize }${ gridHeightUnit }`
-    const lineHeightWithUnit = `${ lineHeight }${ gridHeightUnit }`
+    const fontSizeWithUnit = `${ round(gridFontSize) }${ gridHeightUnit }`
+    const lineHeightWithUnit = `${ round(lineHeight) }${ gridHeightUnit }`
 
     return css`
       margin-top: ${ marginTop };
