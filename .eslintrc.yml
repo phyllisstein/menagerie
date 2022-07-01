@@ -208,11 +208,6 @@ rules:
     - always
 
 overrides:
-  - files: '**/config/**'
+  - files: ['pages/**/*.tsx']
     rules:
-      indent: 'off'
-      sort-keys: 'off'
-      sort-vars: 'off'
-  - files: '**/*.js'
-    rules:
-      '@typescript-eslint/no-var-requires': 'off'
+      import/no-default-export: 'off'
