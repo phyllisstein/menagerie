@@ -20,5 +20,7 @@
     "**/.yarn": true,
     "**/.pnp.*": true
   },
-  "prettier.enable": true
+  "prettier.enable": true,
+  "typescript.format.insertSpaceBeforeFunctionParenthesis": true,
+  "javascript.format.insertSpaceBeforeFunctionParenthesis": true
 }
