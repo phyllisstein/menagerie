@@ -69,11 +69,7 @@ export function Gloss ({ children, left, top = 50 }: Props) {
 
     if (!childWrapper) return
 
-    const af = requestAnimationFrame(() => {
-      setChildrenRect(getOffsetRect(childWrapper))
-    })
-
-    return () => cancelAnimationFrame(af)
+    setChildrenRect(getOffsetRect(childWrapper))
   }, [childElsRef])
 
   useEffect(() => {
@@ -81,32 +77,28 @@ export function Gloss ({ children, left, top = 50 }: Props) {
 
     if (!margin) return
 
-    const af = requestAnimationFrame(() => {
-      setMarginRect(getOffsetRect(margin))
-    })
-
-    return () => cancelAnimationFrame(af)
+    setMarginRect(getOffsetRect(margin))
   }, [marginElsRef])
 
-  let shapeTop = (childrenRect.height || 0) / 2 - (marginRect.height || 0) / 2
-  shapeTop += shapeTop % 8
-  let shapeBottom =
-    (marginRect.height || 0) / 2 + (childrenRect.height || 0) / 2
-  shapeBottom -= shapeBottom % 8
+  const shapeTop = (childrenRect.height || 0) / 2 - (marginRect.height || 0) / 2
 
-  const shapeWidth = (marginRect.width || 0) * 0.8
+  const shapeBottom =
+    (marginRect.height || 0) / 2 + (childrenRect.height || 0) / 2
+
+  const shapeWidth = marginRect.width || 0
   const childrenRectHeight = childrenRect.height || 0
-  const childrenRectMiddle = childrenRect.middle || 0
+  const marginRectMiddle = childrenRect.height / 2 - marginRect.height / 2
+  const marginRectOffset = childrenRect.width / 4
 
   const path = left
     ? `polygon(0 ${ shapeTop }px, ${ shapeWidth }px ${ shapeTop }px, ${ shapeWidth }px ${ shapeBottom }px, 0 ${ shapeBottom }px)`
-    : `polygon(0 ${ shapeTop }px, 0 ${ shapeBottom }px, ${ shapeWidth }px ${ shapeBottom }px, ${ shapeWidth }px ${ shapeTop }px)`
+    : `polygon(${ marginRectOffset }px ${ shapeTop }px, ${ marginRectOffset }px ${ shapeBottom }px, ${
+      shapeWidth + marginRectOffset
+    }px ${ shapeBottom }px, ${ shapeWidth + marginRectOffset }px ${ shapeTop }px)`
 
   return (
-    <div
-      ref={ glossRef }
-      style={{ paddingLeft: left ? '15%' : 0, position: 'relative' }}>
-      <div ref={ childElsRef } style={{ width: left ? '125%' : 'auto' }}>
+    <div ref={ glossRef } style={{ position: 'relative' }}>
+      <div ref={ childElsRef }>
         <div
           style={{
             clipPath: path,
@@ -122,13 +114,11 @@ export function Gloss ({ children, left, top = 50 }: Props) {
       <div
         ref={ marginElsRef }
         style={{
-          left: left ? 0 : 'auto',
+          left: left ? '-1rem' : 'auto',
+          padding: '1rem',
           position: 'absolute',
-          right: left ? 'auto' : 0,
-          top: childrenRectMiddle,
-          transform: left
-            ? `translate(-5%, ${ top * -1 }%)`
-            : `translate(25%, ${ top * -1 }%)`,
+          right: left ? 'auto' : marginRectOffset * -1,
+          top: marginRectMiddle,
           width: '75%',
         }}>
         { marginEl }
