@@ -1,12 +1,20 @@
 const path = require('path')
 
+/**
+ * @type {import('next').NextConfig}
+ */
 module.exports = {
   eslint: {
     ignoreDuringBuilds: true,
   },
   experimental: {
-    concurrentFeatures: true,
-    concurrentMode: true,
+    browsersListForSwc: true,
+    images: {
+      allowFutureImage: true,
+    },
+    legacyBrowsers: false,
+    reactMode: 'concurrent',
+    serverComponents: true,
   },
   compiler: {
     emotion: {
