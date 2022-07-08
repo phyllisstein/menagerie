@@ -1,5 +1,5 @@
 import { faDotCircle } from '@fortawesome/pro-duotone-svg-icons/faDotCircle'
-import { ReactNode } from 'react'
+import { HTMLAttributes, ReactNode } from 'react'
 
 import { DotIcon, Root } from './entry-styles'
 
@@ -14,7 +14,7 @@ export enum DotPosition {
   TopRight,
 }
 
-interface Props {
+interface Props extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode
   dot?: DotPosition
 }

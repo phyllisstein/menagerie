@@ -2,6 +2,7 @@ import * as R from 'ramda'
 import {
   Children,
   CSSProperties,
+  HTMLAttributes,
   memo,
   ReactNode,
   useContext,
@@ -62,7 +63,7 @@ const createMirrorTransform = R.pipe(
   R.fromPairs,
 )
 
-export interface Props {
+export interface Props extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode
   layout?: boolean
   style?: CSSProperties

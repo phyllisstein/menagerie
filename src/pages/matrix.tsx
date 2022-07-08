@@ -20,7 +20,7 @@ export default function ApprovalMatrix (): ReactElement {
   const [step, setStep] = useState(1)
 
   const toggleCurrentStep = useCallback(
-    clickableStep => {
+    (clickableStep: number) => {
       return () => {
         if (clickableStep === step) {
           setStep(1)
