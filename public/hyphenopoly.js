@@ -5,8 +5,8 @@ script.src = '/hyphenopoly/Hyphenopoly_Loader.js'
 script.onload = () => {
   Hyphenopoly.config({
     paths: {
-      maindir: 'http://localhost:3000/hyphenopoly/',
-      patterndir: 'http://localhost:3000/hyphenopoly/',
+      maindir: '/hyphenopoly/',
+      patterndir: '/hyphenopoly/',
     },
     require: {
       'en-us': 'FORCEHYPHENOPOLY',

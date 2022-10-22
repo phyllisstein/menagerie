@@ -32,7 +32,7 @@ export const useHyphenator = targetRef => {
         hyphenator = await window.Hyphenopoly.hyphenators.HTML
       }
 
-      hyphenator(targetRef.current, 'body')
+      hyphenator(targetRef.current, '.__hyphenate')
     }
 
     Promise.resolve()
