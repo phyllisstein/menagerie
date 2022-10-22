@@ -1,5 +1,5 @@
-import styled from '@emotion/styled'
 import { forwardRef, Ref, useCallback, useRef } from 'react'
+import styled from 'styled-components'
 
 import { useHyphenator } from 'hooks/ui'
 

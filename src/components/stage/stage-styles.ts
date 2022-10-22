@@ -1,5 +1,5 @@
-import styled from '@emotion/styled'
 import { animated } from 'react-spring'
+import styled from 'styled-components'
 
 export const Root = styled(animated.div)`
   position: absolute;

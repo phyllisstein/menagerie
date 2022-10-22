@@ -3,13 +3,13 @@ import '@spectrum-css/typography/dist/index-vars.css'
 import '@spectrum-css/vars/dist/spectrum-light.css'
 import '@spectrum-css/vars/dist/spectrum-global.css'
 import '@spectrum-css/vars/dist/spectrum-large.css'
-import { Global, ThemeProvider } from '@emotion/react'
-import emotionTailwindPreflight from 'emotion-tailwind-preflight'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
+import { ThemeProvider } from 'styled-components'
 
 import { AdobeClean } from 'assets/adobe-clean'
 import { AdobeCleanSerif } from 'assets/adobe-clean-serif'
+import { TailwindPreflight } from 'assets/tailwind-preflight'
 import { Body } from 'styles/global'
 import { theme } from 'styles/theme'
 
@@ -27,11 +27,6 @@ declare global {
 function SandboxApp ({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Global styles={ emotionTailwindPreflight } />
-
-      <AdobeClean />
-      <AdobeCleanSerif />
-
       <Head>
         <title>Sandbox</title>
         <meta content='initial-scale=1.0, width=device-width' name='viewport' />
@@ -39,6 +34,9 @@ function SandboxApp ({ Component, pageProps }: AppProps) {
       </Head>
 
       <ThemeProvider theme={ theme }>
+        <AdobeClean />
+        <AdobeCleanSerif />
+        <TailwindPreflight />
         <Body />
         <Component { ...pageProps } />
       </ThemeProvider>

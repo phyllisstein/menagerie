@@ -9,7 +9,6 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "preserve",
-    "jsxImportSource": "@emotion/react",
     "lib": [
       "dom",
       "dom.iterable",

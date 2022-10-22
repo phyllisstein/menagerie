@@ -1,7 +1,7 @@
-import styled from '@emotion/styled'
 import { clearFix } from 'polished'
 import { Children, ReactNode, useEffect, useRef, useState } from 'react'
 import * as R from 'remeda'
+import styled from 'styled-components'
 
 import { Margin } from './margin'
 

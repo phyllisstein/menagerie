@@ -1,4 +1,4 @@
-import styled from '@emotion/styled'
+import styled from 'styled-components'
 
 export const EntryText = styled.article`
   ${ ({ theme }) => theme.typeface.primary({ fontSize: 10 }) }

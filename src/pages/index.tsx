@@ -1,18 +1,19 @@
-import { css } from '@emotion/react'
 import { NextPage } from 'next'
+import styled from 'styled-components'
+
+const AichOne = styled.h1`
+  ${ ({ theme }) => theme.typeface.primary({ fontSize: 12, lineHeight: 12 }) }
+  
+  text-align: center;
+`
 
 const Home: NextPage = () => {
   return (
     <div>
       <main>
-        <h1
-          css={ theme => css`
-            ${ theme.typeface.primary({ fontSize: 6, lineHeight: 8 }) }
-
-            text-align: center;
-          ` }>
+        <AichOne>
           You did the thing!
-        </h1>
+        </AichOne>
       </main>
     </div>
   )

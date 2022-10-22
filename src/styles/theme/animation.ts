@@ -1,5 +1,5 @@
-import { css as styledCSS } from '@emotion/react'
 import { PropertiesHyphen } from 'csstype'
+import { css as styledCSS } from 'styled-components'
 
 // Q.v. <https://github.com/angular/components/blob/master/src/material/core/animation/animation.ts#L20-L22>.
 export enum AnimationDuration {

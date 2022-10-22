@@ -4,6 +4,9 @@ const path = require('path')
  * @type {import('next').NextConfig}
  */
 module.exports = {
+  compiler: {
+    styledComponents: true,
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -15,21 +18,11 @@ module.exports = {
     legacyBrowsers: false,
     reactMode: 'concurrent',
   },
-  compiler: {
-    emotion: {
-      labelFormat: '[local]--[dirname]--[filename]',
-    },
-  },
-  jsConfig: {
-    compilerOptions: {
-      jsxImportSource: '@emotion/react',
-    },
-  },
   reactStrictMode: true,
   typescript: {
     ignoreBuildErrors: true,
   },
-  webpack(config, { dev }) {
+  webpack (config, { dev }) {
     config.resolve.enforceExtension = false
     config.resolve.modules = [
       path.resolve(__dirname, 'src'),

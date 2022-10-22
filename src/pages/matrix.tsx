@@ -1,6 +1,6 @@
-import { useTheme } from '@emotion/react'
 import { faHeartCrack } from '@fortawesome/sharp-solid-svg-icons/faHeartCrack'
 import { ReactElement, useCallback, useState } from 'react'
+import { useTheme } from 'styled-components'
 
 import { DotPosition, EntryText } from 'components/matrix'
 import { Scene, Stage, Transform } from 'components/stage'
