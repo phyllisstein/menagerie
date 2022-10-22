@@ -1,5 +1,5 @@
 import { useTheme } from '@emotion/react'
-import { faHeartBroken } from '@fortawesome/pro-duotone-svg-icons/faHeartBroken'
+import { faHeartCrack } from '@fortawesome/sharp-solid-svg-icons/faHeartCrack'
 import { ReactElement, useCallback, useState } from 'react'
 
 import { DotPosition, EntryText } from 'components/matrix'
@@ -50,6 +50,7 @@ export default function ApprovalMatrix (): ReactElement {
         </Scene>
         <Scene layout>
           <Transform y={ 1440 } />
+          <Transform rotate={ 180 } />
           <Label>Lowbrow</Label>
         </Scene>
         <Scene layout>
@@ -197,7 +198,7 @@ export default function ApprovalMatrix (): ReactElement {
             <EntryText>
               <strong>Grand Theft Auto: San Andreas.</strong> Vroom.
             </EntryText>
-            <Image src='/assets/matrix/gtsa.jpg' />
+            <Image src='/assets/matrix/gtasa.jpg' />
           </Entry>
         </Scene>
         <Scene onClick={ toggleCurrentStep(13) }>
@@ -214,9 +215,9 @@ export default function ApprovalMatrix (): ReactElement {
               pretentious glop.
             </EntryText>
             <PulsingIcon
-              icon={ faHeartBroken }
+              icon={ faHeartCrack }
               size='3x'
-              style={{ color: theme.paletteLight.css.red700 }} />
+              style={{ color: theme.palette.js.red400.alpha(0.8).css() }} />
           </Entry>
         </Scene>
         <Scene onClick={ toggleCurrentStep(14) }>

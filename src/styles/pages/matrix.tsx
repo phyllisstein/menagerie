@@ -1,4 +1,4 @@
-import { css, keyframes } from '@emotion/react'
+import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -42,7 +42,7 @@ export const Label = styled.div`
   font-weight: 600;
   letter-spacing: 4px;
 
-  background-color: ${ ({ theme }) => theme.paletteLight.css.gray50 };
+  background-color: ${ ({ theme }) => theme.palette.css.gray100 };
   backface-visibility: hidden;
 
   pointer-events: none;
@@ -55,7 +55,7 @@ export const Line = styled.div`
   top: 50%;
   left: 50%;
 
-  background-color: ${ ({ theme }) => theme.paletteLight.css.gray800 };
+  background-color: ${ ({ theme }) => theme.palette.css.gray800 };
   transform: translate(-50%, -50%);
   backface-visibility: visible;
 `
@@ -99,7 +99,8 @@ const pulse = keyframes`
 `
 
 export const PulsingIcon = styled(FontAwesomeIcon)`
-  animation: ${ pulse } 2s ease-in-out infinite;
+  font-size: 3rem;
+  animation: ${ pulse } 2s ease-out infinite;
 `
 
 export const Wrapper = styled.div`
@@ -111,9 +112,9 @@ export const Wrapper = styled.div`
   height: 100%;
   overflow: hidden;
 
-  color: ${ ({ theme }) => theme.paletteLight.css.gray800 };
+  color: ${ ({ theme }) => theme.palette.css.gray800 };
 
-  background: ${ ({ theme }) => theme.paletteLight.css.gray50 };
+  background: ${ ({ theme }) => theme.palette.css.gray100 };
 `
 
 export function Madge () {
