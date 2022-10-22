@@ -1,6 +1,5 @@
 import { css as styledCSS } from '@emotion/react'
-
-// import { PropertiesHyphen } from 'csstype' // FIXME: Not sure why this is breaking.
+import { PropertiesHyphen } from 'csstype'
 
 // Q.v. <https://github.com/angular/components/blob/master/src/material/core/animation/animation.ts#L20-L22>.
 export enum AnimationDuration {
@@ -30,7 +29,7 @@ export enum AnimationCurve {
 export interface CSSParams {
   curve?: AnimationCurve
   duration?: AnimationDuration
-  properties?: string[] | string
+  properties?: keyof PropertiesHyphen | Array<keyof PropertiesHyphen>
 }
 
 export function css ({

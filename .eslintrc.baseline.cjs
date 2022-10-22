@@ -54,7 +54,7 @@ module.exports = {
             },
           },
         ],
-        // FIXME: Getting lots of false positives for no-unsafe rules.
+        // Getting lots of false positives for no-unsafe rules.
         '@typescript-eslint/no-unsafe-argument': 'off',
         '@typescript-eslint/no-unsafe-assignment': 'off',
         '@typescript-eslint/no-unsafe-call': 'off',
