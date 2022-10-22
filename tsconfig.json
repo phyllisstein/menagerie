@@ -10,14 +10,23 @@
     "forceConsistentCasingInFileNames": true,
     "jsx": "preserve",
     "jsxImportSource": "@emotion/react",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "moduleResolution": "node",
     "noEmit": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
     "paths": {
-      "*": ["*", "src/*", "vendor/*", "node_modules/*"]
+      "*": [
+        "*",
+        "src/*",
+        "vendor/*",
+        "node_modules/*"
+      ]
     },
     "incremental": true,
     "plugins": [
@@ -30,7 +39,9 @@
     "target": "es2020",
     "module": "esnext"
   },
-  "exclude": ["node_modules"],
+  "exclude": [
+    "node_modules"
+  ],
   "include": [
     "./lib/**/*.ts",
     "./lib/**/*.tsx",

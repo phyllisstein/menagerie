@@ -2,10 +2,9 @@
 
 const { createServer } = require('http')
 const next = require('next')
-const { parse } = require('url')
 
 const {
-  HOSTNAME = 'localhost',
+  HOSTNAME = '0.0.0.0',
   NODE_ENV = 'development',
   PORT = '3000',
 } = process.env

@@ -5,11 +5,10 @@
     "name": "yarn-install",
     "expression": [
       "name",
-      "package.json",
-      "wholename"
+      "yarn.lock"
     ],
     "command": [
-      "./bin/develop.sh",
+      "./scripts/develop.sh",
       "yarn"
     ],
     "append_files": false

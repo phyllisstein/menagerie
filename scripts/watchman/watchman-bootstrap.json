@@ -5,11 +5,11 @@
     "name": "watchman-bootstrap",
     "expression": [
       "dirname",
-      "config/watchman"
+      "scripts/watchman"
     ],
     "command": [
-      "./bin/develop.sh",
-      "watchman"
+      "./scripts/develop.sh",
+      "watches"
     ],
     "append_files": false
   }

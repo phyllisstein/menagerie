@@ -6,14 +6,12 @@ services:
       context: .
     init: true
     environment:
-      - VIRTUAL_HOST=sandbox.duet.here
+      - VIRTUAL_HOST=menagerie.here
     expose:
-      - '80'
+      - '3000'
     networks:
       - default
       - nginx-proxy
-    extra_hosts:
-      - 'sandbox.duet.here:127.0.0.1'
     volumes:
       - type: bind
         source: .
@@ -23,9 +21,6 @@ services:
         target: /app/node_modules
         volume:
           nocopy: true
-      - type: volume
-        source: yarn_cache
-        target: /var/cache/yarn
     secrets:
       - environment
 

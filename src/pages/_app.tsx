@@ -1,10 +1,14 @@
+import '@spectrum-css/vars/dist/spectrum-dark.css'
+import '@spectrum-css/vars/dist/spectrum-large.css'
+import '@spectrum-css/typography/dist/index-vars.css'
+import '@spectrum-css/page/dist/index-vars.css'
 import { Global, ThemeProvider } from '@emotion/react'
 import emotionTailwindPreflight from 'emotion-tailwind-preflight'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
-import Script from 'next/script'
 
 import { AdobeClean } from 'assets/adobe-clean'
+import { AdobeCleanSerif } from 'assets/adobe-clean-serif'
 import { Body } from 'styles/global'
 import { theme } from 'styles/theme'
 
@@ -25,35 +29,7 @@ function SandboxApp ({ Component, pageProps }: AppProps) {
       <Global styles={ emotionTailwindPreflight } />
 
       <AdobeClean />
-
-      <Script
-        src='/assets/hyphenopoly/Hyphenopoly_Loader.js'
-        strategy='lazyOnload'
-        onLoad={ () => {
-          window.Hyphenopoly.config({
-            paths: {
-              maindir: '/assets/hyphenopoly/',
-              patterndir: '/assets/hyphenopoly/',
-            },
-            require: {
-              'en-us': 'FORCEHYPHENOPOLY',
-            },
-            setup: {
-              defaultLanguage: 'en-us',
-              hide: 'false',
-              keepAlive: true,
-              normalize: false,
-              selectors: {
-                body: {
-                  compound: 'all',
-                  hyphen: '\u00AD',
-                  orphanControl: 3,
-                },
-              },
-              timeout: 1000,
-            },
-          })
-        } } />
+      <AdobeCleanSerif />
 
       <Head>
         <title>Sandbox</title>

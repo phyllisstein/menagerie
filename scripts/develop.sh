@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euxo pipefail
+set -Eeuxo pipefail
 
 args="$*"
 
@@ -17,19 +17,17 @@ restart_server() {
 configure_watches() {
   echo "Configuring watches..."
 
-  /usr/local/bin/watchman -j <config/watchman/watch-project.json
-
-  for j in config/watchman/*.json; do
+  watchman watch-del-all || true
+  watchman watch-project "$PWD"
+  for j in scripts/watchman/*.json; do
     echo "Setting watch $j"
     watchman -j <"$j"
   done
 }
 
-spawn_watchman() {
-  echo "Spawning watchman..."
-
-  pkill -f "watchman" || true
-  exec /usr/local/bin/watchman --foreground --log-level=1
+watch_watchman() {
+  pkill -f watchman || true
+  watchman --logfile=- --log-level=debug --foreground watch-project "$PWD"
 }
 
 yarn_install() {
@@ -45,11 +43,15 @@ serve)
   ;;
 
 watch)
-  spawn_watchman
+  yarn_install
+  restart_server
+  configure_watches
+  watch_watchman
   ;;
 
-watchman)
+watches)
   configure_watches
+  watch_watchman
   ;;
 
 yarn)

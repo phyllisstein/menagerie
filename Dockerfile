@@ -1,54 +1,36 @@
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Watchman Builder ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-FROM alpine:3.9 AS watchman
-
-RUN apk add --no-cache \
-  autoconf \
-  automake \
-  bash \
-  build-base \
-  libcrypto1.1 \
-  libgcc \
-  libstdc++ \
-  libtool \
-  linux-headers \
-  openssl-dev \
-  python2-dev \
-  python3-dev
-
-ENV WATCHMAN_VERSION=4.9.0 \
-  WATCHMAN_SHA256=1f6402dc70b1d056fffc3748f2fdcecff730d8843bb6936de395b3443ce05322
-
-RUN cd /tmp \
-  && wget -O watchman.tar.gz "https://github.com/facebook/watchman/archive/v${WATCHMAN_VERSION}.tar.gz" \
-  && echo "$WATCHMAN_SHA256 *watchman.tar.gz" | sha256sum -c - \
-  && tar -xz -f watchman.tar.gz -C /tmp/ \
-  && rm -rf watchman.tar.gz
-
-RUN cd /tmp/watchman-${WATCHMAN_VERSION} \
-  && ./autogen.sh \
-  && ./configure --enable-lenient \
-  && make \
-  && make install \
-  && cd $HOME \
-  && rm -rf /tmp/*
-
-RUN strip /usr/local/bin/watchman
+FROM phyllisstein/watchman:v2022.06.20 AS watchman
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ App ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-FROM node:18-alpine AS app
+FROM ubuntu:20.04 AS app
 
-COPY --from=watchman /usr/local/bin/watchman* /usr/local/bin/
-COPY --from=watchman /usr/local/var/run/watchman /usr/local/var/run/watchman
+COPY --from=watchman /usr/local/bin/* /usr/local/bin/
+COPY --from=watchman /usr/local/lib/* /usr/local/lib/
 
-RUN apk add --no-cache bash git
+RUN apt-get update \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confdef" --allow-downgrades --allow-remove-essential --allow-change-held-packages --no-install-recommends \
+    ca-certificates \
+    libboost-context1.71.0 \
+    libevent-2.1-7 \
+    libsnappy1v5 \
+    curl \
+    git \
+    netcat \
+  && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+  && curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | tee /usr/share/keyrings/yarnkey.gpg >/dev/null \
+  && echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | tee /etc/apt/sources.list.d/yarn.list \
+  && apt-get update \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confdef" --allow-downgrades --allow-remove-essential --allow-change-held-packages \
+    nodejs \
+    yarn \
+  && mkdir -p /usr/local/var/run/watchman
 
-ENV YARN_CACHE_FOLDER=/var/cache/yarn \
-  PATH="/app/node_modules/.bin:$PATH"
+ENV PATH="/app/node_modules/.bin:/usr/share/nodejs/yarn/bin:$PATH"
+
 WORKDIR /app
 
-COPY config/develop.sh ./config/develop.sh
-COPY config/watchman ./config/watchman
+COPY scripts/develop.sh ./scripts/develop.sh
+COPY scripts/watchman ./scripts/watchman
 
-RUN ./config/develop.sh watchman
+RUN ./scripts/develop.sh watches
 
-CMD ["./config/develop.sh", "watch"]
+CMD ["./scripts/develop.sh", "watch"]

@@ -29,8 +29,8 @@ export const Image = styled.img`
 export const Label = styled.div`
   ${ ({ theme }) =>
     theme.typeface.accent({
-      fontSize: 17,
-      lineHeight: 19,
+      fontSize: 14,
+      lineHeight: 16,
     }) }
 
   display: flex;
