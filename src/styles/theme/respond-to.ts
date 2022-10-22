@@ -1,5 +1,5 @@
-import { css, SerializedStyles } from '@emotion/react'
 import { rem } from 'polished'
+import { css, InterpolationValue } from 'styled-components'
 
 const breakpoints = {
   lg: rem('1056px'),
@@ -14,7 +14,7 @@ type Breakpoint = keyof typeof breakpoints
 export const between = (
   start: Breakpoint,
   end: Breakpoint,
-  style: SerializedStyles,
+  style: InterpolationValue,
 ) =>
   // prettier-ignore
   css`
@@ -23,13 +23,13 @@ export const between = (
     }
 `
 
-export const above = (breakpoint: Breakpoint, style: SerializedStyles) => css`
+export const above = (breakpoint: Breakpoint, style: InterpolationValue) => css`
   @media (min-width: ${ breakpoints[breakpoint] }) {
     ${ style }
   }
 `
 
-export const below = (breakpoint: Breakpoint, style: SerializedStyles) => css`
+export const below = (breakpoint: Breakpoint, style: InterpolationValue) => css`
   @media (max-width: ${ breakpoints[breakpoint] }) {
     ${ style }
   }

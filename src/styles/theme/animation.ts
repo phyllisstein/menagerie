@@ -1,4 +1,4 @@
-import { css as styledCSS } from '@emotion/react'
+import { css as styledCSS } from 'styled-components'
 
 // import { PropertiesHyphen } from 'csstype' // FIXME: Not sure why this is breaking.
 

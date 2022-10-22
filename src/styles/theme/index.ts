@@ -20,7 +20,7 @@ export const theme = {
 
 type CustomTheme = typeof theme
 
-declare module '@emotion/react' {
+declare module 'styled-components' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  export interface Theme extends CustomTheme {}
+  export interface DefaultTheme extends CustomTheme {}
 }

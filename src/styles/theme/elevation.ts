@@ -1,5 +1,5 @@
-import { css } from '@emotion/react'
 import * as R from 'ramda'
+import { css } from 'styled-components'
 
 import { css as animationCSS, AnimationDuration } from './animation'
 

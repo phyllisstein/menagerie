@@ -1,8 +1,11 @@
-import { Global, ThemeProvider } from '@emotion/react'
-import emotionTailwindPreflight from 'emotion-tailwind-preflight'
+import '@spectrum-css/page/dist/index-vars.css'
+import '@spectrum-css/typography/dist/index-vars.css'
+import '@spectrum-css/vars/dist/spectrum-dark.css'
+import '@spectrum-css/vars/dist/spectrum-global.css'
+import '@spectrum-css/vars/dist/spectrum-large.css'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
-import Script from 'next/script'
+import { ThemeProvider } from 'styled-components'
 
 import { AdobeClean } from 'assets/adobe-clean'
 import { Body } from 'styles/global'
@@ -12,8 +15,8 @@ declare global {
   interface Window {
     Hyphenopoly: {
       config: (...args: unknown[]) => void
-      hyphenators?: {
-        HTML?: unknown
+      hyphenators: {
+        HTML: Promise<(el: HTMLElement, sel?: string) => void>
       }
     }
   }
@@ -22,39 +25,6 @@ declare global {
 function SandboxApp ({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Global styles={ emotionTailwindPreflight } />
-
-      <AdobeClean />
-
-      <Script
-        src='/assets/hyphenopoly/Hyphenopoly_Loader.js'
-        strategy='lazyOnload'
-        onLoad={ () => {
-          window.Hyphenopoly.config({
-            paths: {
-              maindir: '/assets/hyphenopoly/',
-              patterndir: '/assets/hyphenopoly/',
-            },
-            require: {
-              'en-us': 'FORCEHYPHENOPOLY',
-            },
-            setup: {
-              defaultLanguage: 'en-us',
-              hide: 'false',
-              keepAlive: true,
-              normalize: false,
-              selectors: {
-                body: {
-                  compound: 'all',
-                  hyphen: '\u00AD',
-                  orphanControl: 3,
-                },
-              },
-              timeout: 1000,
-            },
-          })
-        } } />
-
       <Head>
         <title>Sandbox</title>
         <meta content='initial-scale=1.0, width=device-width' name='viewport' />
@@ -62,6 +32,7 @@ function SandboxApp ({ Component, pageProps }: AppProps) {
       </Head>
 
       <ThemeProvider theme={ theme }>
+        <AdobeClean />
         <Body />
         <Component { ...pageProps } />
       </ThemeProvider>

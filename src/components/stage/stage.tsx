@@ -130,7 +130,7 @@ export function Stage ({
     return () => enableBodyScroll(el)
   }, [rootEl])
 
-  const transform = R.prop(step, transforms) || { scale: 1, translate: {}}
+  const transform = R.prop(step, transforms) || { scale: 1, translate: {} }
 
   const didZoom = transform.scale > staleScale.current
   staleScale.current = transform.scale

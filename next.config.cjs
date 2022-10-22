@@ -1,36 +1,17 @@
 const path = require('path')
 
-/**
- * @type {import('next').NextConfig}
- */
 module.exports = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  experimental: {
-    browsersListForSwc: true,
-    images: {
-      allowFutureImage: true,
-    },
-    legacyBrowsers: false,
-    reactMode: 'concurrent',
-    serverComponents: true,
-  },
   compiler: {
-    emotion: {
-      labelFormat: '[local]--[dirname]--[filename]',
-    },
-  },
-  jsConfig: {
-    compilerOptions: {
-      jsxImportSource: '@emotion/react',
-    },
+    styledComponents: true,
   },
   reactStrictMode: true,
   typescript: {
     ignoreBuildErrors: true,
   },
-  webpack(config, { dev }) {
+  webpack (config, { dev }) {
     config.resolve.enforceExtension = false
     config.resolve.modules = [
       path.resolve(__dirname, 'src'),

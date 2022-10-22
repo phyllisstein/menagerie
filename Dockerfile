@@ -12,7 +12,6 @@ RUN apk add --no-cache \
   libtool \
   linux-headers \
   openssl-dev \
-  python2-dev \
   python3-dev
 
 ENV WATCHMAN_VERSION=4.9.0 \

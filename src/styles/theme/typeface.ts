@@ -1,7 +1,10 @@
-import { css } from '@emotion/react'
+import { css } from 'styled-components'
 
 import {
   accent as plumberAccent,
+  caslon as plumberCaslon,
+  millerDisplay as plumberMillerDisplay,
+  millerText as plumberMillerText,
   primary as plumberPrimary,
   PlumberProps,
 } from './plumber'

@@ -1,51 +1,65 @@
 {
   "compilerOptions": {
-    "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "alwaysStrict": true,
     "baseUrl": "./",
-    "checkJs": true,
-    "esModuleInterop": true,
+    "declaration": true,
+    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
-    "jsx": "preserve",
-    "jsxImportSource": "@emotion/react",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "moduleResolution": "node",
-    "noEmit": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "paths": {
-      "*": ["*", "src/*", "vendor/*", "node_modules/*"]
-    },
     "incremental": true,
-    "plugins": [
-      {
-        "name": "typescript-styled-plugin",
-        "validate": false
-      }
-    ],
-    "isolatedModules": true,
+    "jsx": "preserve",
+    "module": "es2020",
+    "moduleResolution": "node",
+    "outDir": "./dist",
+    "paths": {
+      "*": [
+        "*",
+        "src/*",
+        "vendor/*",
+        "test/*",
+        "node_modules/*"
+      ]
+    },
+    "removeComments": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
     "target": "es2020",
-    "module": "esnext"
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true
   },
-  "exclude": ["node_modules"],
   "include": [
+    "./*.ts",
+    "./*.d.ts",
+    "./bin/**/*.d.ts",
+    "./bin/**/*.ts",
+    "./bin/**/*.tsx",
+    "./lib/**/*.d.ts",
     "./lib/**/*.ts",
     "./lib/**/*.tsx",
-    "./lib/**/*.d.ts",
+    "./src/**/*.d.ts",
     "./src/**/*.ts",
     "./src/**/*.tsx",
-    "./src/**/*.d.ts",
-    "./vendor/**/*.ts",
-    "./vendor/**/*.tsx",
+    "./test/**/*.d.ts",
+    "./test/**/*.ts",
+    "./test/**/*.tsx",
+    "./test/**/*.tsx",
     "./vendor/**/*.d.ts",
-    "./global.d.ts",
-    "./gsap.d.ts",
-    "./next-env.d.ts"
+    "./vendor/**/*.ts",
+    "./vendor/**/*.tsx"
   ],
   "typeAcquisition": {
     "enable": true
-  }
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }

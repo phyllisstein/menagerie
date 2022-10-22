@@ -1,4 +1,4 @@
-import { Global, css } from '@emotion/react'
+import { createGlobalStyle, css } from 'styled-components'
 
 const fontFaces = css`
   @font-face {
@@ -217,4 +217,6 @@ const fontFaces = css`
   }
 `
 
-export const AdobeClean = () => <Global styles={ fontFaces } />
+export const AdobeClean = createGlobalStyle`
+  ${ fontFaces }
+`

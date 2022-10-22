@@ -1,6 +1,6 @@
-import { css } from '@emotion/react'
 import _ from 'lodash'
 import { getValueAndUnit } from 'polished'
+import { css } from 'styled-components'
 
 import { unitless } from './scale'
 
@@ -108,7 +108,7 @@ const getPlumber = ({
     `
   }
 
-  plumber.box = function({
+  plumber.box = function ({
     border = ['0px', '0px'],
     gridHeight = GRID_HEIGHT,
     margin = [0, 0],

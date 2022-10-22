@@ -1,6 +1,6 @@
-import { useTheme } from '@emotion/react'
 import { faHeartBroken } from '@fortawesome/pro-duotone-svg-icons/faHeartBroken'
 import { ReactElement, useCallback, useState } from 'react'
+import { useTheme } from 'styled-components'
 
 import { DotPosition, EntryText } from 'components/matrix'
 import { Scene, Stage, Transform } from 'components/stage'
@@ -50,6 +50,7 @@ export default function ApprovalMatrix (): ReactElement {
         </Scene>
         <Scene layout>
           <Transform y={ 1440 } />
+          <Transform rotate={ 180 } />
           <Label>Lowbrow</Label>
         </Scene>
         <Scene layout>
