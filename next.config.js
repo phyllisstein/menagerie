@@ -14,7 +14,6 @@ module.exports = {
     },
     legacyBrowsers: false,
     reactMode: 'concurrent',
-    serverComponents: true,
   },
   compiler: {
     emotion: {

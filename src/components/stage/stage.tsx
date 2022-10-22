@@ -97,9 +97,7 @@ export function Stage ({
   step: rawStep,
   width = 1024,
 }: Props): ReactElement {
-  const [windowScale, setWindowScale] = useState(() =>
-    getWindowScale(height, width, scaleConstraints),
-  )
+  const [windowScale, setWindowScale] = useState(1)
 
   const step = R.clamp(1, Children.count(children), rawStep) - 1
   const rootEl = useRef<HTMLDivElement>(null)
@@ -108,6 +106,10 @@ export function Stage ({
   const registerTransform = useCallback((transform: Transform) => {
     setTransforms(transforms => [...transforms, transform])
   }, [])
+
+  useEffect(() => {
+    setWindowScale(() => getWindowScale(height, width, scaleConstraints))
+  }, [''])
 
   useEffect(() => {
     const triggerRescale = debounce(250, (): void => {
