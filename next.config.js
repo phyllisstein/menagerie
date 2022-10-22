@@ -16,7 +16,6 @@ module.exports = {
       allowFutureImage: true,
     },
     legacyBrowsers: false,
-    reactMode: 'concurrent',
   },
   reactStrictMode: true,
   typescript: {

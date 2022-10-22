@@ -4,28 +4,28 @@ import { HTMLAttributes, ReactNode } from 'react'
 import { DotIcon, Root } from './entry-styles'
 
 export enum DotPosition {
-  Bottom,
-  BottomLeft,
-  BottomRight,
-  Left,
-  Right,
-  Top,
-  TopLeft,
-  TopRight,
+    Bottom,
+    BottomLeft,
+    BottomRight,
+    Left,
+    Right,
+    Top,
+    TopLeft,
+    TopRight,
 }
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
-  children?: ReactNode
-  dot?: DotPosition
+    children?: ReactNode
+    dot?: DotPosition
 }
 
 export function Entry ({ children, dot, ...rest }: Props) {
-  return (
-    <Root { ...rest } $position={ dot }>
-      { dot != null && (
-        <DotIcon icon={ faDotCircle } style={{ position: 'absolute' }} />
-      ) }
-      { children }
-    </Root>
-  )
+    return (
+        <Root { ...rest } $position={ dot }>
+            { dot != null && (
+                <DotIcon icon={ faDotCircle } style={{ position: 'absolute' }} />
+            ) }
+            { children }
+        </Root>
+    )
 }

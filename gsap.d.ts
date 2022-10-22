@@ -30,36 +30,36 @@
 /// <reference path="node_modules/gsap/types/gsap-core.d.ts"/>
 
 declare module '@gsap/shockingly' {
-  export * from 'gsap/gsap-core'
-  export { gsap as default } from 'gsap/gsap-core'
+    export * from 'gsap/gsap-core'
+    export { gsap as default } from 'gsap/gsap-core'
 }
 
 declare module '@gsap/shockingly/src' {
-  export * from 'gsap'
-  export { gsap as default } from 'gsap'
+    export * from 'gsap'
+    export { gsap as default } from 'gsap'
 }
 
 declare module '@gsap/shockingly/src/index' {
-  export * from 'gsap'
-  export { gsap as default } from 'gsap'
+    export * from 'gsap'
+    export { gsap as default } from 'gsap'
 }
 
 declare module '@gsap/shockingly/dist' {
-  export * from 'gsap'
-  export { gsap as default } from 'gsap'
+    export * from 'gsap'
+    export { gsap as default } from 'gsap'
 }
 
 declare module '@gsap/shockingly/dist/gsap' {
-  export * from 'gsap'
-  export { gsap as default } from 'gsap'
+    export * from 'gsap'
+    export { gsap as default } from 'gsap'
 }
 
 declare module '@gsap/shockingly/all' {
-  export * from 'gsap/all'
-  export { gsap as default } from 'gsap/all'
+    export * from 'gsap/all'
+    export { gsap as default } from 'gsap/all'
 }
 
 declare module '@gsap/shockingly/src/all' {
-  export * from 'gsap/all'
-  export { gsap as default } from 'gsap/all'
+    export * from 'gsap/all'
+    export { gsap as default } from 'gsap/all'
 }

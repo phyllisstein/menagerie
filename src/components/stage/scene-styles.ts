@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 
 export const Root = styled.div`
-  position: absolute;
+    position: absolute;
 
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
 `
