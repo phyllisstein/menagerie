@@ -43,6 +43,9 @@
     "use-deep-compare-effect": "^1.8.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.19.6",
+    "@babel/eslint-plugin": "^7.19.1",
+    "@babel/parser": "^7.19.6",
     "@emotion/babel-plugin": "^11.10.2",
     "@emotion/css": "^11.10.0",
     "@emotion/react": "^11.10.4",
@@ -66,7 +69,8 @@
     "babel-plugin-ramda": "^2.1.1",
     "concurrently": "^7.4.0",
     "eslint": "^8.26.0",
-    "eslint-config-next": "12.3.1",
+    "eslint-config-next": "^12.3.1",
+    "eslint-import-resolver-typescript": "^3.5.2",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-ramda": "^2.5.1",
     "eslint-plugin-react": "^7.31.10",
