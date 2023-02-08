@@ -6,13 +6,20 @@ import { useHyphenator } from 'hooks/ui'
 const BaseP = styled.p<{ $indent?: boolean }>`
   ${ ({ theme }) =>
     theme.typeface.primary({
-      fontSize: 9,
-      leadingBottom: 2,
-      leadingTop: 2,
-      lineHeight: 11,
+      fontSize: 7,
+      leadingBottom: 0,
+      leadingTop: 0,
+      lineHeight: 9,
     }) }
 
+  font-weight: 500;
+  text-align: justify;
+  text-indent: ${ ({ $indent, theme }) => $indent ? theme.scale.css(5) : '0' };
   hyphens: manual;
+
+  & + & {
+    text-indent: ${ ({ theme }) => theme.scale.css(5) };
+  }
 `
 
 type Graf = JSX.IntrinsicElements['p']
