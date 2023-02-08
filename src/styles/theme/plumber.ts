@@ -116,21 +116,24 @@ const getPlumber = ({
   }) {
     const [gridHeightValue, gridHeightUnit] = getValueAndUnit(gridHeight)
 
-    const [marginTop, marginBottom] = margin.map(m =>
+    let [marginTop, marginBottom] = margin.map(m =>
       round(m * gridHeightValue),
     )
-    const [paddingTop, paddingBottom] = padding.map(p =>
+    let [paddingTop, paddingBottom] = padding.map(p =>
       round(p * gridHeightValue),
     )
     const [borderTop, borderBottom] = border
 
+    marginTop = `${ round(marginTop) }${ gridHeightUnit }`
+    marginBottom = `${ round(marginBottom) }${ gridHeightUnit }`
+    paddingTop = `calc(${ round(paddingTop) }${ gridHeightUnit } - ${ borderTop })`
+    paddingBottom = `calc(${ round(paddingBottom) }${ gridHeightUnit } - ${ borderBottom })`
+
     return css`
-      margin-top: ${ round(marginTop) }${ gridHeightUnit };
-      margin-bottom: ${ round(marginBottom) }${ gridHeightUnit };
-      padding-top: calc(${ round(paddingTop) }${ gridHeightUnit } - ${ borderTop });
-      padding-bottom: calc(
-        ${ round(paddingBottom) }${ gridHeightUnit } - ${ borderBottom }
-      );
+      margin-top: ${ marginTop };
+      margin-bottom: ${ marginBottom };
+      padding-top: ${ paddingTop };
+      padding-bottom: ${ paddingBottom };
     `
   }
 
