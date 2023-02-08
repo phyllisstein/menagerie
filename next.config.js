@@ -11,12 +11,7 @@ module.exports = {
     ignoreDuringBuilds: true,
   },
   experimental: {
-    browsersListForSwc: true,
-    images: {
-      allowFutureImage: true,
-    },
     legacyBrowsers: false,
-    reactMode: 'concurrent',
   },
   reactStrictMode: true,
   typescript: {
