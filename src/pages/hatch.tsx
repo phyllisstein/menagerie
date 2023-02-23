@@ -1,9 +1,24 @@
 import { useGesture } from '@use-gesture/react'
 import * as BodyScrollLock from 'body-scroll-lock'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { gsap } from 'gsap'
+
+const Container = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 50vw;
+  height: 50vh;
+
+  transform: translate3d(-50%, -50%, 0);
+  transform-style: preserve-3d;
+  perspective: 1000px;
+
+  touch-action: none;
+`
 
 const RearVideo = styled.video`
   position: absolute;
@@ -18,7 +33,7 @@ const MiddleVideo = styled.video`
   top: 50%;
   left: 50%;
 
-  transform: translate3d(-50%, -50%, -10rem);
+  transform: translate3d(-50%, -50%, -1rem);
   filter: url(#red-wash);
 
   mask-image: url('/assets/pixel.svg');
@@ -30,7 +45,7 @@ const FrontVideo = styled.video`;
   top: 50%;
   left: 50%;
 
-  transform: translate3d(-50%, -50%, 1rem);
+  transform: translate3d(-50%, -50%, 0);
   filter: url(#purple-wash);
 
   mask-image: url('/assets/pixel.svg');
@@ -62,35 +77,31 @@ function HatchPage () {
   }, [])
 
   const handler = ({ active, last, xy: [x, y] }) => {
-    const offsetX = (x / window.innerHeight - 0.5) * -100
+    const offsetX = (x / window.innerWidth - 0.5) * -100
     const offsetY = (y / window.innerHeight - 0.5) * -100
 
     if (active) {
       gsap.to('#front', {
-        rotateY: `${ offsetX / 2 }deg`,
-        x: `${ offsetX }%`,
-        y: `${ offsetY }%`,
+        rotateY: `${ offsetX * 0.5 }deg`,
+        z: `${ offsetY * 5 }px`,
       })
 
       gsap.to('#middle', {
-        rotateY: `${ offsetX / 2 }deg`,
-        x: `${ offsetX / 2 }%`,
-        y: `${ offsetY / 2 }%`,
+        rotateZ: `${ offsetX * -0.5 }deg`,
       })
     }
 
     if (last) {
       gsap.to('#front', {
         rotateY: 0,
-        x: 0,
-        y: 0,
+        z: 0,
       })
 
       gsap.to('#middle', {
-        rotateY: 0,
-        x: 0,
-        y: 0,
+        rotateZ: 0,
       })
+
+      setFrontPurple(!frontPurple)
     }
   }
 
@@ -102,8 +113,10 @@ function HatchPage () {
     { target: typeof window !== 'undefined' ? window : null },
   )
 
+  const [frontPurple, setFrontPurple] = useState(false)
+
   return (
-    <div style={{ height: '50vh', left: '50%', perspective: '1000px', position: 'absolute', top: '50%', touchAction: 'none', transform: 'translate3d(-50%, -50%, 0)', width: '50vw' }}>
+    <Container>
       <svg viewBox='0 0 500 100'>
         <defs>
           <filter id='filter-custom' />
@@ -111,13 +124,7 @@ function HatchPage () {
       </svg>
       <svg viewBox='0 0 10 10' width='0' height='0'>
         <defs>
-          <mask id='filtered-1'>
-            <rect x='0' y='0' width='10' height='10' fill='#000000' />
-            <rect x='1' y='1' width='8' height='8' fill='#ffffff' />
-          </mask>
           <filter id='purple-wash'>
-            <feTurbulence type='fractalNoise' baseFrequency='0.05' numOctaves='2' result='turbulence' />
-            <feDisplacementMap in='SourceGraphic' in2='turbulence' scale='20' />
             <feColorMatrix type='matrix' values={ purpleMatrix } />
           </filter>
           <filter id='red-wash'>
@@ -125,13 +132,13 @@ function HatchPage () {
           </filter>
         </defs>
       </svg>
-      <MiddleVideo autoPlay loop muted playsInline id='middle'>
+      <MiddleVideo autoPlay loop muted playsInline id='middle' style={{ filter: frontPurple ? 'url(#red-wash)' : 'url(#purple-wash)' }}>
         <source src='/assets/hatch/coverr-jeronimos-monastery-in-lisbon-portugal-6360-original.mp4' type='video/mp4' />
       </MiddleVideo>
-      <FrontVideo autoPlay loop muted playsInline id='front'>
+      <FrontVideo autoPlay loop muted playsInline id='front' style={{ filter: frontPurple ? 'url(#purple-wash)' : 'url(#red-wash)' }}>
         <source src='/assets/hatch/coverr-a-vinyl-disc-rotating-on-a-record-player-6767-original.mp4' type='video/mp4' />
       </FrontVideo>
-    </div>
+    </Container>
   )
 }
 
