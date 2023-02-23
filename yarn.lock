@@ -2866,6 +2866,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@use-gesture/core@npm:10.2.24":
+  version: 10.2.24
+  resolution: "@use-gesture/core@npm:10.2.24"
+  checksum: 92c2cedde03ca5a209f0f2abc120d834601bfa1631d61983ae6eede99bcf680ff229d006394f10dd3825f4da838c3cd0156f67a3b586ec031e52d3b3ec618bef
+  languageName: node
+  linkType: hard
+
+"@use-gesture/react@npm:^10.2.24":
+  version: 10.2.24
+  resolution: "@use-gesture/react@npm:10.2.24"
+  dependencies:
+    "@use-gesture/core": 10.2.24
+  peerDependencies:
+    react: ">= 16.8.0"
+  checksum: f8e651aa2e32f78af369b43366ae186aa8beb5b2684308da4262395663559a0eefb0124964db948d9636fe8fe5bfc870937f398dcb8f2cfe738a0c4a37d555c4
+  languageName: node
+  linkType: hard
+
 "acorn-jsx@npm:^5.2.0, acorn-jsx@npm:^5.3.2":
   version: 5.3.2
   resolution: "acorn-jsx@npm:5.3.2"
@@ -5583,6 +5601,7 @@ __metadata:
     "@types/styled-components": ^5.1.26
     "@typescript-eslint/eslint-plugin": ^5.53.0
     "@typescript-eslint/parser": ^5.53.0
+    "@use-gesture/react": ^10.2.24
     babel-plugin-lodash: ^3.3.4
     babel-plugin-ramda: ^2.1.1
     bezier-easing: ^2.1.0

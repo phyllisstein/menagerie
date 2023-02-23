@@ -1,4 +1,7 @@
+import { useHover, useMove } from '@use-gesture/react'
 import styled from 'styled-components'
+
+import { gsap } from 'gsap'
 
 const FilterImage = styled.img`
   filter: url(#filter-custom);
@@ -27,7 +30,7 @@ const MiddleVideo = styled.video`
   top: 50%;
   left: 50%;
 
-  transform: translate3d(-50%, -50%, -15rem);
+  transform: translate3d(-50%, -50%, -10rem);
   filter: url(#red-wash);
 
   mask-image: url('/assets/pixel.svg');
@@ -62,8 +65,41 @@ function HatchPage () {
     0     0     0     1   0
   `
 
+  useMove(({ active, last, xy: [x, y] }) => {
+    const offsetX = (x / window.innerHeight - 0.5) * -100
+    const offsetY = (y / window.innerHeight - 0.5) * -100
+
+    if (active) {
+      gsap.to('#front', {
+        rotateY: `${ offsetX / 2 }deg`,
+        x: `${ offsetX }%`,
+        y: `${ offsetY }%`,
+      })
+
+      gsap.to('#middle', {
+        rotateY: `${ offsetX / 2 }deg`,
+        x: `${ offsetX / 2 }%`,
+        y: `${ offsetY / 2 }%`,
+      })
+    }
+
+    if (last) {
+      gsap.to('#front', {
+        rotateY: 0,
+        x: 0,
+        y: 0,
+      })
+
+      gsap.to('#middle', {
+        rotateY: 0,
+        x: 0,
+        y: 0,
+      })
+    }
+  }, { target: typeof window !== 'undefined' ? window : null })
+
   return (
-    <div style={{ height: '100vh', perspective: '1000px', width: '100vw' }}>
+    <div style={{ height: '50vh', left: '50%', perspective: '1000px', position: 'absolute', top: '50%', transform: 'translate3d(-50%, -50%, 0)', width: '50vw' }}>
       <svg viewBox='0 0 500 100'>
         <defs>
           <filter id='filter-custom' />
@@ -85,10 +121,10 @@ function HatchPage () {
           </filter>
         </defs>
       </svg>
-      <MiddleVideo autoPlay loop muted playsInline>
+      <MiddleVideo autoPlay loop muted playsInline id='middle'>
         <source src='/assets/hatch/coverr-jeronimos-monastery-in-lisbon-portugal-6360-original.mp4' type='video/mp4' />
       </MiddleVideo>
-      <FrontVideo autoPlay loop muted playsInline>
+      <FrontVideo autoPlay loop muted playsInline id='front'>
         <source src='/assets/hatch/coverr-a-vinyl-disc-rotating-on-a-record-player-6767-original.mp4' type='video/mp4' />
       </FrontVideo>
     </div>
