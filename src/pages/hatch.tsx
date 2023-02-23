@@ -25,7 +25,11 @@ const RearVideo = styled.video`
   top: 50%;
   left: 50%;
 
-  transform: translate3d(-50%, -50%, 20rem);
+  transform: translate3d(-50%, -50%, -10rem);
+
+  mask-image: url('/assets/hatch/nsm.png');
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
 `
 
 const MiddleVideo = styled.video`
@@ -36,7 +40,8 @@ const MiddleVideo = styled.video`
   transform: translate3d(-50%, -50%, -5rem);
   filter: url(#red-wash);
 
-  mask-image: url('/assets/pixel.svg');
+  mask-image: url('/assets/hatch/mkpm.png');
+  mask-repeat: no-repeat;
   mask-size: 100% 100%;
 `
 
@@ -48,7 +53,7 @@ const FrontVideo = styled.video`;
   transform: translate3d(-50%, -50%, 0);
   filter: url(#purple-wash);
 
-  mask-image: url('/assets/pixel.svg');
+  mask-image: url('/assets/hatch/cdm.png');
   mask-repeat: no-repeat;
   mask-size: 100% 100%;
 `
@@ -132,6 +137,9 @@ function HatchPage () {
           </filter>
         </defs>
       </svg>
+      <RearVideo autoPlay loop muted playsInline id='rear'>
+        <source src='/assets/hatch/coverr-a-man-walking-in-the-park-8723-original.mp4' type='video/mp4' />
+      </RearVideo>
       <MiddleVideo autoPlay loop muted playsInline id='middle' style={{ filter: frontPurple ? 'url(#red-wash)' : 'url(#purple-wash)' }}>
         <source src='/assets/hatch/coverr-jeronimos-monastery-in-lisbon-portugal-6360-original.mp4' type='video/mp4' />
       </MiddleVideo>
