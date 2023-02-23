@@ -27,10 +27,10 @@ const MiddleVideo = styled.video`
   top: 50%;
   left: 50%;
 
-  transform: translate3d(-50%, -50%, 10rem);
+  transform: translate3d(-50%, -50%, -15rem);
   filter: url(#red-wash);
 
-  mask-image: url('/assets/hatch/circle-dot.png');
+  mask-image: url('/assets/pixel.svg');
   mask-size: 100% 100%;
 `
 
@@ -42,7 +42,8 @@ const FrontVideo = styled.video`;
   transform: translate3d(-50%, -50%, 1rem);
   filter: url(#purple-wash);
 
-  mask-image: url('/assets/hatch/triangle.png');
+  mask-image: url('/assets/pixel.svg');
+  mask-repeat: no-repeat;
   mask-size: 100% 100%;
 `
 
