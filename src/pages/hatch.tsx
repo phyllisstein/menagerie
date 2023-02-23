@@ -88,12 +88,14 @@ function HatchPage () {
     if (active) {
       gsap.to('#peephole', {
         maskPosition: `${ offsetX }% ${ offsetY }%`,
+        maskSize: `${ 100 - offsetX }% ${ 100 - offsetY }%`,
       })
     }
 
     if (last) {
       gsap.to('#peephole', {
         maskPosition: '50% 50%',
+        maskSize: '50% 50%',
       })
       setFrontPurple(!frontPurple)
     }
