@@ -28,16 +28,7 @@ module.exports = {
         when: 'always',
       },
     ],
-    'react/jsx-sort-props': [
-      'warn',
-      {
-        callbacksLast: true,
-        shorthandFirst: true,
-        reservedFirst: true,
-        ignoreCase: true,
-        multiline: 'last',
-      },
-    ],
+    'react/jsx-sort-props': 'off',
     'react/jsx-tag-spacing': [
       'warn',
       {
