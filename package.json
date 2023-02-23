@@ -20,6 +20,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@fortawesome/sharp-regular-svg-icons": "^6.3.0",
     "@fortawesome/sharp-solid-svg-icons": "^6.3.0",
+    "@react-spring/web": "^9.7.0",
     "@spectrum-css/page": "^5.0.18",
     "@spectrum-css/typography": "^4.0.28",
     "@spectrum-css/vars": "^8.0.4",

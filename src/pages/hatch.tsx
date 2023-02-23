@@ -1,9 +1,12 @@
+import { animated, config, useSpring } from '@react-spring/web'
 import { useGesture } from '@use-gesture/react'
 import * as BodyScrollLock from 'body-scroll-lock'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { gsap } from 'gsap'
+
+const AnimatedFeColorMatrix = animated('feColorMatrix')
 
 const Container = styled.div`
   position: absolute;
@@ -38,7 +41,7 @@ const FrontVideo = styled.video`
   height: 100vh;
 
   transform: translate3d(-50%, -50%, 0);
-  filter: url(#purple-wash);
+  filter: url(#animated-wash);
 `
 
 const Peephole = styled.div`
@@ -59,6 +62,15 @@ const Peephole = styled.div`
 `
 
 function HatchPage () {
+  const [frontPurple, setFrontPurple] = useState(false)
+
+  const identityMatrix = `
+    1   0     0     0   0
+    0     1   0       0 0
+    0     0     1   0   0
+    0     0     0     1   0
+  `
+
   const purpleMatrix = `
     1   1     0     0   0
     0     0.5   0       0 0
@@ -67,11 +79,18 @@ function HatchPage () {
   `
 
   const redMatrix = `
-    2   0.25     0.5     0   0
+    1   1     0.5     0   0
     0     0   0       0 0
     0     0     0   0   0
     0     0     0     1   0
   `
+
+  const [{ values }, api] = useSpring(() => ({
+    config: config.molasses,
+    from: {
+      values: identityMatrix,
+    },
+  }))
 
   useEffect(() => {
     BodyScrollLock.disableBodyScroll(document.querySelector('body'))
@@ -81,9 +100,15 @@ function HatchPage () {
     }
   }, [])
 
-  const handler = ({ active, last, xy: [x, y] }) => {
+  const handler = ({ active, first, last, xy: [x, y] }) => {
     const offsetX = (window.innerWidth - x) / window.innerWidth * 100
     const offsetY = (window.innerHeight - y) / window.innerHeight * 100
+
+    if (first) {
+      api.start({
+        values: frontPurple ? purpleMatrix : redMatrix,
+      })
+    }
 
     if (active) {
       gsap.to('#peephole', {
@@ -97,6 +122,11 @@ function HatchPage () {
         maskPosition: '50% 50%',
         maskSize: '50% 50%',
       })
+
+      api.start({
+        values: identityMatrix,
+      })
+
       setFrontPurple(!frontPurple)
     }
   }
@@ -109,15 +139,8 @@ function HatchPage () {
     { target: typeof window !== 'undefined' ? window : null },
   )
 
-  const [frontPurple, setFrontPurple] = useState(false)
-
   return (
     <div>
-      <svg viewBox='0 0 500 100'>
-        <defs>
-          <filter id='filter-custom' />
-        </defs>
-      </svg>
       <svg viewBox='0 0 10 10' width='0' height='0'>
         <defs>
           <filter id='purple-wash'>
@@ -128,8 +151,15 @@ function HatchPage () {
           </filter>
         </defs>
       </svg>
+      <animated.svg viewBox='0 0 10 10' width='0' height='0'>
+        <defs>
+          <filter id='animated-wash'>
+            <AnimatedFeColorMatrix type='matrix' values={ values } />
+          </filter>
+        </defs>
+      </animated.svg>
       <Peephole id='peephole'>
-        <FrontVideo autoPlay loop muted playsInline style={{ filter: frontPurple ? 'url(#purple-wash)' : 'url(#red-wash)' }}>
+        <FrontVideo autoPlay loop muted playsInline>
           <source src='/assets/hatch/coverr-a-vinyl-disc-rotating-on-a-record-player-6767-original.mp4' type='video/mp4' />
         </FrontVideo>
       </Peephole>
