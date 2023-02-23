@@ -1,4 +1,6 @@
-import { useHover, useMove } from '@use-gesture/react'
+import { useGesture } from '@use-gesture/react'
+import * as BodyScrollLock from 'body-scroll-lock'
+import { useEffect } from 'react'
 import styled from 'styled-components'
 
 import { gsap } from 'gsap'
@@ -51,7 +53,15 @@ function HatchPage () {
     0     0     0     1   0
   `
 
-  useMove(({ active, last, xy: [x, y] }) => {
+  useEffect(() => {
+    BodyScrollLock.disableBodyScroll(document.querySelector('body'))
+
+    return () => {
+      BodyScrollLock.enableBodyScroll(document.querySelector('body'))
+    }
+  }, [])
+
+  const handler = ({ active, last, xy: [x, y] }) => {
     const offsetX = (x / window.innerHeight - 0.5) * -100
     const offsetY = (y / window.innerHeight - 0.5) * -100
 
@@ -82,10 +92,18 @@ function HatchPage () {
         y: 0,
       })
     }
-  }, { target: typeof window !== 'undefined' ? window : null })
+  }
+
+  useGesture(
+    {
+      onDrag: handler,
+      onMove: handler,
+    },
+    { target: typeof window !== 'undefined' ? window : null },
+  )
 
   return (
-    <div style={{ height: '50vh', left: '50%', perspective: '1000px', position: 'absolute', top: '50%', transform: 'translate3d(-50%, -50%, 0)', width: '50vw' }}>
+    <div style={{ height: '50vh', left: '50%', perspective: '1000px', position: 'absolute', top: '50%', touchAction: 'none', transform: 'translate3d(-50%, -50%, 0)', width: '50vw' }}>
       <svg viewBox='0 0 500 100'>
         <defs>
           <filter id='filter-custom' />
