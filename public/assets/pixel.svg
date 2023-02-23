@@ -1,13 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg id="a" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
-  <defs>
-    <style>
-      .b {
-        fill: none;
-        stroke: #231f20;
-        stroke-miterlimit: 10;
-      }
-    </style>
-  </defs>
-  <rect class="b" x=".5" y=".51" width="8.99" height="8.99"/>
+  <rect class="b" x="0.5" y="0.5" width="8" height="8" stroke-width='2' stroke='#000000' fill='none'/>
 </svg>

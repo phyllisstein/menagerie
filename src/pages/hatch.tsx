@@ -33,7 +33,7 @@ const MiddleVideo = styled.video`
   top: 50%;
   left: 50%;
 
-  transform: translate3d(-50%, -50%, -1rem);
+  transform: translate3d(-50%, -50%, -5rem);
   filter: url(#red-wash);
 
   mask-image: url('/assets/pixel.svg');
