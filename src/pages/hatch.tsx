@@ -20,18 +20,6 @@ const Container = styled.div`
   touch-action: none;
 `
 
-const RearVideo = styled.video`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-
-  transform: translate3d(-50%, -50%, -10rem);
-
-  mask-image: url('/assets/hatch/nsm.png');
-  mask-repeat: no-repeat;
-  mask-size: 100% 100%;
-`
-
 const MiddleVideo = styled.video`
   position: absolute;
   top: 50%;
@@ -39,23 +27,35 @@ const MiddleVideo = styled.video`
 
   transform: translate3d(-50%, -50%, -5rem);
   filter: url(#red-wash);
-
-  mask-image: url('/assets/hatch/mkpm.png');
-  mask-repeat: no-repeat;
-  mask-size: 100% 100%;
 `
 
-const FrontVideo = styled.video`;
+const FrontVideo = styled.video`
   position: absolute;
   top: 50%;
   left: 50%;
 
+  width: 100vw;
+  height: 100vh;
+
   transform: translate3d(-50%, -50%, 0);
   filter: url(#purple-wash);
+`
 
-  mask-image: url('/assets/hatch/cdm.png');
+const Peephole = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  transform-style: preserve-3d;
+  perspective: 1000px;
+
+  mask-image: url('/assets/hatch/mkpm.png');
+  mask-position: 50% 50%;
   mask-repeat: no-repeat;
-  mask-size: 100% 100%;
+  mask-size: 50% 50%;
 `
 
 function HatchPage () {
@@ -82,30 +82,19 @@ function HatchPage () {
   }, [])
 
   const handler = ({ active, last, xy: [x, y] }) => {
-    const offsetX = (x / window.innerWidth - 0.5) * -100
-    const offsetY = (y / window.innerHeight - 0.5) * -100
+    const offsetX = (window.innerWidth - x) / window.innerWidth * 100
+    const offsetY = (window.innerHeight - y) / window.innerHeight * 100
 
     if (active) {
-      gsap.to('#front', {
-        rotateY: `${ offsetX * 0.5 }deg`,
-        z: `${ offsetY * 5 }px`,
-      })
-
-      gsap.to('#middle', {
-        rotateZ: `${ offsetX * -0.5 }deg`,
+      gsap.to('#peephole', {
+        maskPosition: `${ offsetX }% ${ offsetY }%`,
       })
     }
 
     if (last) {
-      gsap.to('#front', {
-        rotateY: 0,
-        z: 0,
+      gsap.to('#peephole', {
+        maskPosition: '50% 50%',
       })
-
-      gsap.to('#middle', {
-        rotateZ: 0,
-      })
-
       setFrontPurple(!frontPurple)
     }
   }
@@ -121,7 +110,7 @@ function HatchPage () {
   const [frontPurple, setFrontPurple] = useState(false)
 
   return (
-    <Container>
+    <div>
       <svg viewBox='0 0 500 100'>
         <defs>
           <filter id='filter-custom' />
@@ -137,16 +126,12 @@ function HatchPage () {
           </filter>
         </defs>
       </svg>
-      <RearVideo autoPlay loop muted playsInline id='rear'>
-        <source src='/assets/hatch/coverr-a-man-walking-in-the-park-8723-original.mp4' type='video/mp4' />
-      </RearVideo>
-      <MiddleVideo autoPlay loop muted playsInline id='middle' style={{ filter: frontPurple ? 'url(#red-wash)' : 'url(#purple-wash)' }}>
-        <source src='/assets/hatch/coverr-jeronimos-monastery-in-lisbon-portugal-6360-original.mp4' type='video/mp4' />
-      </MiddleVideo>
-      <FrontVideo autoPlay loop muted playsInline id='front' style={{ filter: frontPurple ? 'url(#purple-wash)' : 'url(#red-wash)' }}>
-        <source src='/assets/hatch/coverr-a-vinyl-disc-rotating-on-a-record-player-6767-original.mp4' type='video/mp4' />
-      </FrontVideo>
-    </Container>
+      <Peephole id='peephole'>
+        <FrontVideo autoPlay loop muted playsInline style={{ filter: frontPurple ? 'url(#purple-wash)' : 'url(#red-wash)' }}>
+          <source src='/assets/hatch/coverr-a-vinyl-disc-rotating-on-a-record-player-6767-original.mp4' type='video/mp4' />
+        </FrontVideo>
+      </Peephole>
+    </div>
   )
 }
 
