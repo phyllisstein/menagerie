@@ -3,20 +3,6 @@ import styled from 'styled-components'
 
 import { gsap } from 'gsap'
 
-const FilterImage = styled.img`
-  filter: url(#filter-custom);
-`
-
-const FilterHed = styled.h1`
-  position: relative;
-
-  font-weight: 700;
-  font-size: 3rem;
-  line-height: 2;
-
-  filter: url(#filtered-1);
-`
-
 const RearVideo = styled.video`
   position: absolute;
   top: 50%;
