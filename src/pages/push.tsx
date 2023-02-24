@@ -59,11 +59,13 @@ function PushPage () {
   return (
     <Container>
       <Viewer style={{ transform: 'rotateY(0)' }}>
-        <Face color='blue400' style={{ ...props, translateZ: '1rem' }}>
+        <Face color='blue400' style={{
+          transform: to([props.rotateX, props.rotateY], (x, y) => `translate3d(-50%, -50%, 1rem) rotateX(${ x }deg) rotateY(${ y }deg)`),
+        }}>
           <h1 style={{ fontSize: '2.5rem' }}>1</h1>
         </Face>
         <Face color='red400' style={{
-          transform: to([props.rotateX, props.rotateY], (x, y) => `rotateX(${ x }deg) rotateY(${ y }deg) rotateY(180deg)`),
+          transform: to([props.rotateX, props.rotateY], (x, y) => `translate3d(-50%, -50%, 0) rotateX(${ x }deg) rotateY(${ y }deg) rotateY(180deg)`),
         }}>
           <h1 style={{ fontSize: '2.5rem' }}>2</h1>
         </Face>
