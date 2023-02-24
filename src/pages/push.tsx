@@ -35,11 +35,14 @@ function PushPage () {
 
   useGesture(
     {
-      onMove: ({ active, last, xy: [x, y] }) => {
+      onMove: ({ active, last, xy: [xPosition, yPosition] }) => {
+        const x = (xPosition - window.innerWidth / 2) / window.innerWidth * 180
+        const y = (yPosition - window.innerHeight / 2) / window.innerHeight * -180
+
         if (active) {
           api.start({
-            rotateX: (y - window.innerHeight) / window.innerHeight * 100,
-            rotateY: (x - window.innerWidth) / window.innerWidth * 100,
+            rotateX: y,
+            rotateY: x,
           })
         }
 
@@ -58,9 +61,9 @@ function PushPage () {
 
   return (
     <Container>
-      <Viewer style={{ transform: 'rotateY(0)' }}>
+      <Viewer style={{ transform: 'rotateY(180deg)' }}>
         <Face color='blue400' style={{
-          transform: to([props.rotateX, props.rotateY], (x, y) => `translate3d(-50%, -50%, 1rem) rotateX(${ x }deg) rotateY(${ y }deg)`),
+          transform: to([props.rotateX, props.rotateY], (x, y) => `translate3d(-50%, -50%, 2rem) rotateX(${ x }deg) rotateY(${ y }deg)`),
         }}>
           <h1 style={{ fontSize: '2.5rem' }}>1</h1>
         </Face>
