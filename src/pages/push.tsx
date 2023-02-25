@@ -1,5 +1,6 @@
-import { animated, config, to, useSpring } from '@react-spring/web'
+import { animated, config, to, useSpring, useTrail } from '@react-spring/web'
 import { useGesture } from '@use-gesture/react'
+import { useState } from 'react'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -26,12 +27,38 @@ const Viewer = styled.div`
   transform-style: preserve-3d;
 `
 
-function PushPage () {
-  const [props, api] = useSpring(() => ({
-    config: config.molasses,
-    rotateX: 0,
-    rotateY: 0,
+const trans = (x: number, y: number) =>
+  `translate3d(${ x }px,${ y }px,0) translate3d(-50%,-50%,0) `
+
+function Cursor ({ xy: [x, y] }: { xy: [number, number] }) {
+  const [trails] = useTrail(3, i => ({
+    config: i === 0 ? config.default : config.slow,
+    xy: [x, y],
   }))
+
+  console.log(x, y)
+
+  return (
+    <>
+      <svg width='500' height='500' viewBox='0 0 500 500' preserveAspectRatio='none' style={{ background: 'none', cursor: 'default' }}>
+        <defs>
+          <linearGradient id='gradient'>
+            <stop offset='0%' stopColor='#3236a8' />
+            <stop offset='100%' stopColor='#27bb36' />
+          </linearGradient>
+        </defs>
+        {
+          trails.map((props, index) => (
+            <animated.circle key={ index } style={{ fill: 'url(#gradient)', fillOpacity: 1 }} r='25' cx='500' cy='500' />
+          ))
+        }
+      </svg>
+    </>
+  )
+}
+
+function PushPage () {
+  const [xy, setXY] = useState<[number, number]>([0, 0])
 
   useGesture(
     {
@@ -40,17 +67,11 @@ function PushPage () {
         const y = (yPosition - window.innerHeight / 2) / window.innerHeight * -180
 
         if (active) {
-          api.start({
-            rotateX: y,
-            rotateY: x,
-          })
+          setXY([x, y])
         }
 
         if (last) {
-          api.start({
-            rotateX: 0,
-            rotateY: 0,
-          })
+          setXY([0, 0])
         }
       },
     },
@@ -61,18 +82,7 @@ function PushPage () {
 
   return (
     <Container>
-      <Viewer style={{ transform: 'rotateY(180deg)' }}>
-        <Face color='blue400' style={{
-          transform: to([props.rotateX, props.rotateY], (x, y) => `translate3d(-50%, -50%, 2rem) rotateX(${ x }deg) rotateY(${ y }deg)`),
-        }}>
-          <h1 style={{ fontSize: '2.5rem' }}>1</h1>
-        </Face>
-        <Face color='red400' style={{
-          transform: to([props.rotateX, props.rotateY], (x, y) => `translate3d(-50%, -50%, 0) rotateX(${ x }deg) rotateY(${ y }deg) rotateY(180deg)`),
-        }}>
-          <h1 style={{ fontSize: '2.5rem' }}>2</h1>
-        </Face>
-      </Viewer>
+      <Cursor xy={ xy } />
     </Container>
   )
 }
