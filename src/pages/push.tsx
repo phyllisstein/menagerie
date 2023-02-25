@@ -1,5 +1,6 @@
 import { animated, config, to, useSpring } from '@react-spring/web'
 import { useGesture } from '@use-gesture/react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -27,6 +28,8 @@ const Viewer = styled.div`
 `
 
 function PushPage () {
+  const [resetPending, setResetPending] = useState(false)
+
   const [props, api] = useSpring(() => ({
     config: config.molasses,
     rotateX: 0,
@@ -36,8 +39,8 @@ function PushPage () {
   useGesture(
     {
       onMove: ({ active, last, xy: [xPosition, yPosition] }) => {
-        const x = (xPosition - window.innerWidth / 2) / window.innerWidth * 180
-        const y = (yPosition - window.innerHeight / 2) / window.innerHeight * -180
+        const x = (xPosition - window.innerWidth / 2) / window.innerWidth * 90
+        const y = (yPosition - window.innerHeight / 2) / window.innerHeight * -90
 
         if (active) {
           api.start({
@@ -46,11 +49,8 @@ function PushPage () {
           })
         }
 
-        if (last) {
-          api.start({
-            rotateX: 0,
-            rotateY: 0,
-          })
+        if (last && !resetPending) {
+          setResetPending(true)
         }
       },
     },
@@ -58,6 +58,25 @@ function PushPage () {
       target: typeof window !== 'undefined' ? window : undefined,
     },
   )
+
+  useEffect(() => {
+    let timeout: NodeJS.Timer
+
+    if (resetPending) {
+      timeout = setInterval(() => {
+        api.start({
+          rotateX: 0,
+          rotateY: 0,
+        })
+
+        setResetPending(false)
+      }, 500)
+    }
+
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [resetPending])
 
   return (
     <Container>
