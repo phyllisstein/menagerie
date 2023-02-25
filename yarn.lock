@@ -107,18 +107,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/generator@npm:^7.20.7":
-  version: 7.20.14
-  resolution: "@babel/generator@npm:7.20.14"
-  dependencies:
-    "@babel/types": "npm:^7.20.7"
-    "@jridgewell/gen-mapping": "npm:^0.3.2"
-    jsesc: "npm:^2.5.1"
-  checksum: 5f6aa2d86af26e76d276923a5c34191124a119b16ee9ccc34aef654a7dec84fbd7d2daed2e6458a6a06bf87f3661deb77c9fea59b8f67faff5c90793c96d76d6
-  languageName: node
-  linkType: hard
-
-"@babel/generator@npm:^7.21.0":
+"@babel/generator@npm:^7.20.5, @babel/generator@npm:^7.21.0, @babel/generator@npm:^7.21.1":
   version: 7.21.1
   resolution: "@babel/generator@npm:7.21.1"
   dependencies:
@@ -127,6 +116,17 @@ __metadata:
     "@jridgewell/trace-mapping": ^0.3.17
     jsesc: ^2.5.1
   checksum: 69085a211ff91a7a608ee3f86e6fcb9cf5e724b756d792a713b0c328a671cd3e423e1ef1b12533f366baba0616caffe0a7ba9d328727eab484de5961badbef00
+  languageName: node
+  linkType: hard
+
+"@babel/generator@npm:^7.20.7":
+  version: 7.20.14
+  resolution: "@babel/generator@npm:7.20.14"
+  dependencies:
+    "@babel/types": "npm:^7.20.7"
+    "@jridgewell/gen-mapping": "npm:^0.3.2"
+    jsesc: "npm:^2.5.1"
+  checksum: 5f6aa2d86af26e76d276923a5c34191124a119b16ee9ccc34aef654a7dec84fbd7d2daed2e6458a6a06bf87f3661deb77c9fea59b8f67faff5c90793c96d76d6
   languageName: node
   linkType: hard
 
@@ -524,6 +524,15 @@ __metadata:
   bin:
     parser: ./bin/babel-parser.js
   checksum: 1d0f47ca67ff2652f1c0ff1570bed8deccbc4b53509e7cd73476af9cc7ed23480c99f1179bd6d0be01612368b92b39e206d330ad6054009d699934848a89298b
+  languageName: node
+  linkType: hard
+
+"@babel/parser@npm:^7.20.5, @babel/parser@npm:^7.21.2":
+  version: 7.21.2
+  resolution: "@babel/parser@npm:7.21.2"
+  bin:
+    parser: ./bin/babel-parser.js
+  checksum: e2b89de2c63d4cdd2cafeaea34f389bba729727eec7a8728f736bc472a59396059e3e9fe322c9bed8fd126d201fb609712949dc8783f4cae4806acd9a73da6ff
   languageName: node
   linkType: hard
 
@@ -1593,6 +1602,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/traverse@npm:^7.20.5":
+  version: 7.21.2
+  resolution: "@babel/traverse@npm:7.21.2"
+  dependencies:
+    "@babel/code-frame": ^7.18.6
+    "@babel/generator": ^7.21.1
+    "@babel/helper-environment-visitor": ^7.18.9
+    "@babel/helper-function-name": ^7.21.0
+    "@babel/helper-hoist-variables": ^7.18.6
+    "@babel/helper-split-export-declaration": ^7.18.6
+    "@babel/parser": ^7.21.2
+    "@babel/types": ^7.21.2
+    debug: ^4.1.0
+    globals: ^11.1.0
+  checksum: d851e3f5cfbdc2fac037a014eae7b0707709de50f7d2fbb82ffbf932d3eeba90a77431529371d6e544f8faaf8c6540eeb18fdd8d1c6fa2b61acea0fb47e18d4b
+  languageName: node
+  linkType: hard
+
 "@babel/traverse@npm:^7.21.0":
   version: 7.21.0
   resolution: "@babel/traverse@npm:7.21.0"
@@ -1641,6 +1668,17 @@ __metadata:
     "@babel/helper-validator-identifier": ^7.19.1
     to-fast-properties: ^2.0.0
   checksum: dbcdda202b3a2bfd59e4de880ce38652f1f8957893a9751be069ac86e47ad751222070fe6cd92220214d77973f1474e4e1111c16dc48199dfca1489c0ee8c0c5
+  languageName: node
+  linkType: hard
+
+"@babel/types@npm:^7.21.2":
+  version: 7.21.2
+  resolution: "@babel/types@npm:7.21.2"
+  dependencies:
+    "@babel/helper-string-parser": ^7.19.4
+    "@babel/helper-validator-identifier": ^7.19.1
+    to-fast-properties: ^2.0.0
+  checksum: a45a52acde139e575502c6de42c994bdbe262bafcb92ae9381fb54cdf1a3672149086843fda655c7683ce9806e998fd002bbe878fa44984498d0fdc7935ce7ff
   languageName: node
   linkType: hard
 
@@ -2877,7 +2915,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/typescript-estree@npm:5.53.0":
+"@typescript-eslint/typescript-estree@npm:5.53.0, @typescript-eslint/typescript-estree@npm:^5.47.0":
   version: 5.53.0
   resolution: "@typescript-eslint/typescript-estree@npm:5.53.0"
   dependencies:
@@ -4502,6 +4540,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"estree-walker@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "estree-walker@npm:2.0.2"
+  checksum: 6151e6f9828abe2259e57f5fd3761335bb0d2ebd76dc1a01048ccee22fabcfef3c0859300f6d83ff0d1927849368775ec5a6d265dde2f6de5a1be1721cd94efc
+  languageName: node
+  linkType: hard
+
 "esutils@npm:^2.0.2":
   version: 2.0.3
   resolution: "esutils@npm:2.0.3"
@@ -5695,9 +5740,11 @@ __metadata:
     next: 13.1.6
     p-wait-for: ^5.0.0
     polished: ^4.2.2
-    postcss: 8.4.21
+    postcss: ^8.4.21
     postcss-html: ^1.5.0
     postcss-jsx: ^0.36.4
+    postcss-styled-components: ^0.2.1
+    postcss-styled-syntax: ^0.3.3
     postcss-syntax: ^0.36.2
     prettier: ^2.8.4
     prettier-config-standard: ^5.0.0
@@ -6263,6 +6310,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss-js-core@npm:^0.5.1":
+  version: 0.5.1
+  resolution: "postcss-js-core@npm:0.5.1"
+  dependencies:
+    "@babel/generator": ^7.20.5
+    "@babel/parser": ^7.20.5
+    "@babel/traverse": ^7.20.5
+  peerDependencies:
+    postcss: ^8.3.11
+  checksum: 8db61cea1603e8a0adbec64966289b6c79d5a567e4b876093f413317b78627c0b07995fd99fa73fae9336b6fd49bfbb170ef440f518f514a4781b602155899bb
+  languageName: node
+  linkType: hard
+
 "postcss-jsx@npm:^0.36.4":
   version: 0.36.4
   resolution: "postcss-jsx@npm:0.36.4"
@@ -6314,6 +6374,36 @@ __metadata:
   peerDependencies:
     postcss: ^8.4.20
   checksum: 044d1dcbe04458a3d0fbd90854d408afae3fb90474d3b70021828f7b6fc0820133ad6b8d194268847e2afee50524686b70dee930ed19039469ff828283331af1
+  languageName: node
+  linkType: hard
+
+"postcss-styled-components@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "postcss-styled-components@npm:0.2.1"
+  dependencies:
+    postcss-js-core: ^0.5.1
+  peerDependencies:
+    postcss: ^8.3.11
+    postcss-less: ^6.0.0
+    postcss-scss: ^4.0.6
+  peerDependenciesMeta:
+    postcss-less:
+      optional: true
+    postcss-scss:
+      optional: true
+  checksum: 386ebcd1df3e85a348f485ded77be861f3fe04d1d73dfa3d0c6f9034a4d28d14b2c54d0d30ce19e8c2be72eb6a4d985783aece9012baade0369252be1a70d0fe
+  languageName: node
+  linkType: hard
+
+"postcss-styled-syntax@npm:^0.3.3":
+  version: 0.3.3
+  resolution: "postcss-styled-syntax@npm:0.3.3"
+  dependencies:
+    "@typescript-eslint/typescript-estree": ^5.47.0
+    estree-walker: ^2.0.2
+  peerDependencies:
+    postcss: ^8.4.21
+  checksum: 063bd940d517e1cabaabfd17edb68d6d870a97eef0f8613275e80fb6d903c85b9743c24307cb5ef615fa91e663f47a97474ed793dd3cebdfb4de1cb5552795e6
   languageName: node
   linkType: hard
 
