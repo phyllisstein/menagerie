@@ -106,8 +106,6 @@ module.exports = {
     'import',
     '@next/eslint-plugin-next',
     'ramda',
-    'sort-destructure-keys',
-    'sort-keys-fix',
   ],
   root: true,
   rules: {
@@ -174,13 +172,6 @@ module.exports = {
         beforeStatementContinuationChars: 'always',
       },
     ],
-    'sort-destructure-keys/sort-destructure-keys': [
-      'warn',
-      {
-        caseSensitive: false,
-      },
-    ],
-    'sort-keys-fix/sort-keys-fix': 'warn',
     'sort-imports': 'off',
     'space-before-function-paren': [
       'warn',
@@ -189,23 +180,23 @@ module.exports = {
     'template-curly-spacing': ['warn', 'always'],
   },
   settings: {
+    'environments': {
+      'browser': true,
+      'commonjs': true,
+      'es2022': true,
+      'node': true,
+      'shared-node-browser': true,
+    },
     'import/cache': {
       lifetime: '∞',
     },
     'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
       '@babel/parser': ['.js', '.jsx', '.cjs', '.mjs'],
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
     'import/resolver': {
-      typescript: true,
       node: true,
-    },
-    'environments': {
-      'browser': true,
-      'commonjs': true,
-      'node': true,
-      'es2022': true,
-      'shared-node-browser': true,
+      typescript: true,
     },
   },
 }
