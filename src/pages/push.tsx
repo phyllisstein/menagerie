@@ -39,7 +39,15 @@ interface WispsData {
   [key: string]: Wisp
 }
 
-function Wisp () {
+function PushPage () {
+  const [resetPending, setResetPending] = useState(false)
+
+  const [props, api] = useSpring(() => ({
+    config: config.molasses,
+    rotateX: 0,
+    rotateY: 0,
+  }))
+
   const idRef = useRef<string>()
   const socketRef = useRef<Socket>()
   const [wisps, setWisps] = useState<WispsData>({})
@@ -66,6 +74,26 @@ function Wisp () {
         socket.on('update', data => {
           const { state } = data
 
+          const values = Object.values(state).sort((a, b) => a.timestamp - b.timestamp)
+          values.forEach(wisp => {
+            gsap.to(`#wisp-${ wisp.id }`, {
+              x: `${ wisp.position[0] * window.innerWidth - 25 }px`,
+              y: `${ wisp.position[1] * window.innerHeight - 75 }px`,
+              z: `${ wisp.position[2] * window.innerHeight }px`,
+            })
+          })
+
+          const last = values.pop()
+
+          const rotateY = ((last.position[0] * window.innerWidth) - window.innerWidth / 2) / window.innerWidth * 90
+          const rotateX = ((last.position[1] * window.innerHeight) - window.innerHeight / 2) / window.innerHeight * -90
+
+          api.start({
+            rotateX,
+            rotateY,
+          })
+
+          setResetPending(true)
           setWisps(state)
         })
       }
@@ -76,9 +104,9 @@ function Wisp () {
 
   useGesture(
     {
-      onMove: ({ active, xy: [x, y] }) => {
-        const pctX = x / window.innerWidth
-        const pctY = y / window.innerHeight
+      onMove: ({ active, last, xy: [xPosition, yPosition] }) => {
+        const pctX = xPosition / window.innerWidth
+        const pctY = yPosition / window.innerHeight
 
         socketRef.current.emit('update', {
           id: idRef.current,
@@ -87,60 +115,8 @@ function Wisp () {
             Math.round(pctY * 100) / 100,
             0,
           ],
+          timestamp: performance.now(),
         })
-      },
-    },
-    {
-      target: typeof window !== 'undefined' ? window : undefined,
-    },
-  )
-
-  useEffect(() => {
-    Object.values(wisps).forEach(wisp => {
-      gsap.to(`#circle-${ wisp.id }`, {
-        x: `${ wisp.position[0] * window.innerWidth - 25 }px`,
-        y: `${ wisp.position[1] * window.innerHeight - 75 }px`,
-        z: `${ wisp.position[2] * window.innerHeight }px`,
-      })
-    })
-  }, [wisps])
-
-  return (
-    <div style={{ transformStyle: 'preserve-3d', perspective: '1000px' }}>
-      {
-        Object.values(wisps).map(({ id, position }) => {
-          return position && (
-            <svg key={ id } id={ `circle-${ id }` } style={{ width: '50px', height: '50px' }} viewBox='0 0 50 50'>
-              <circle cx='50%' cy='50%' r='50%' fill='#000000' />
-            </svg>
-          )
-        })
-      }
-    </div>
-  )
-}
-
-function PushPage () {
-  const [resetPending, setResetPending] = useState(false)
-
-  const [props, api] = useSpring(() => ({
-    config: config.molasses,
-    rotateX: 0,
-    rotateY: 0,
-  }))
-
-  useGesture(
-    {
-      onMove: ({ active, last, xy: [xPosition, yPosition] }) => {
-        const x = (xPosition - window.innerWidth / 2) / window.innerWidth * 90
-        const y = (yPosition - window.innerHeight / 2) / window.innerHeight * -90
-
-        if (active) {
-          api.start({
-            rotateX: y,
-            rotateY: x,
-          })
-        }
 
         if (last && !resetPending) {
           setResetPending(true)
@@ -187,7 +163,15 @@ function PushPage () {
           </Face>
         </Viewer>
       </Container>
-      <Wisp />
+      {
+        Object.values(wisps).map(({ id, position }) => {
+          return position && (
+            <svg key={ id } id={ `wisp-${ id }` } style={{ width: '50px', height: '50px' }} viewBox='0 0 50 50'>
+              <circle cx='50%' cy='50%' r='50%' fill='#000000' />
+            </svg>
+          )
+        })
+      }
     </>
   )
 }

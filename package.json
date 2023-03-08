@@ -45,6 +45,7 @@
     "socket.io": "^4.6.1",
     "socket.io-client": "^4.6.1",
     "styled-components": "^5.3.6",
+    "superjson": "^1.12.2",
     "swr": "^2.1.0",
     "use-deep-compare-effect": "^1.8.1",
     "ws": "^8.12.1"

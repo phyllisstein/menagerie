@@ -42,7 +42,7 @@ io.on('connection', socket => {
     sockets.set(socket, data.id)
     state[data.id] = data
 
-    io.emit('update', {
+    socket.broadcast.emit('update', {
       state,
     })
   })
