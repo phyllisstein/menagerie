@@ -2,6 +2,7 @@ import { animated, config, to, useSpring } from '@react-spring/web'
 import { useGesture } from '@use-gesture/react'
 import pWaitFor from 'p-wait-for'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import io, { type Socket } from 'socket.io-client'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -39,8 +40,8 @@ interface WispsData {
 
 function Wisp () {
   const idRef = useRef<string>()
-  const socketRef = useRef<WebSocket>()
-  const [wisps, setWisps] = useState<WispsData[]>([])
+  const socketRef = useRef<Socket>()
+  const [wisps, setWisps] = useState<WispsData>({})
 
   useEffect(() => {
     const createSocket = async () => {
@@ -58,23 +59,21 @@ function Wisp () {
 
       if (!socket) {
         // socket = io('wss://cloudflare-wisps-dev.daniel8056.workers.dev/')
-        socket = new WebSocket('ws://localhost:3000/api/wisps')
+        socket = io('http://localhost:3030')
         socketRef.current = socket
 
-        await pWaitFor(() => socket.readyState === WebSocket.OPEN)
+        socket.emit('update', {
+          id,
+          position: [
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+          ],
+        })
 
-        socket.send(
-          JSON.stringify({ id }),
-        )
-
-        socket.addEventListener('message', event => {
-          const data = JSON.parse(event.data)
-
-          console.log(data)
-
-          setWisps(wisps => {
-            return wisps?.concat(data)
-          })
+        socket.on('update', data => {
+          const { state } = data
+          setWisps(state)
         })
       }
     }
@@ -87,9 +86,9 @@ function Wisp () {
   return (
     <>
       {
-        wisps?.map(({ position }) => {
+        Object.values(wisps).map(({ id, position }) => {
           return position && (
-            <svg style={{ width: '50px', height: '50px', transform: `translate3d(${ position[0] }px, ${ position[1] }px, ${ position[2] }px)` }} viewBox='0 0 50 50'>
+            <svg key={ id } style={{ width: '50px', height: '50px', transform: `translate3d(${ position[0] }px, ${ position[1] }px, ${ position[2] }px)` }} viewBox='0 0 50 50'>
               <circle cx='50%' cy='50%' r='50%' fill='#000000' />
             </svg>
           )
