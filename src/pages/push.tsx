@@ -2,6 +2,7 @@ import { animated, config, to, useSpring } from '@react-spring/web'
 import { useGesture } from '@use-gesture/react'
 import pWaitFor from 'p-wait-for'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { io, type Socket } from 'socket.io-client'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -38,51 +39,37 @@ interface WispsData {
 }
 
 function Wisp () {
-  const defaultID = typeof crypto !== 'undefined' ? crypto.randomUUID() : ''
-  const idRef = useRef<string>(defaultID)
-  const socketRef = useRef<WebSocket>()
+  const idRef = useRef<string>()
+  const socketRef = useRef<Socket>()
   const [wisps, setWisps] = useState<WispsData>({})
 
-  const getSocket = useCallback(async () => {
-    const socket = socketRef.current
-    const id: string = idRef.current
+  useEffect(() => {
+    let socket = socketRef.current
+    let id = idRef.current
+
+    if (!id) {
+      id =
+        typeof crypto === 'undefined'
+          ? Math.random().toString(36).substring(7)
+          : crypto.randomUUID()
+
+      idRef.current = id
+    }
 
     if (!socket) {
-      socketRef.current = new WebSocket('wss://cloudflare-wisps-dev.daniel8056.workers.dev/')
-      // socketRef.current = new WebSocket('ws://127.0.0.1:8787')
-
-      await pWaitFor(() => socketRef.current?.readyState === WebSocket.OPEN)
-
-      socketRef.current.send(JSON.stringify({
-        type: 'ready',
-        data: {
-          id,
-        },
-      }))
-    }
-
-    return socketRef.current
-  }, [])
-
-  useEffect(() => {
-    const bind = async () => {
-      const socket = await getSocket()
-
-      if (!socket) {
-        return
-      }
-
-      socket.addEventListener('message', event => {
-        const { type, data } = JSON.parse(event.data)
-
-        if (type === 'animate') {
-          setWisps(data.wisps)
-        }
+      // socket = io('wss://cloudflare-wisps-dev.daniel8056.workers.dev/')
+      socket = io('ws://127.0.0.1:3000', {
+        path: '/api/wisps',
       })
+      socketRef.current = socket
     }
 
-    void bind()
-  }, [getSocket])
+    socket.emit('wisp', { id })
+
+    socket.on('wisp', (data: Wisp) => {
+      setWisps(data)
+    })
+  }, [])
 
   return (
     <>
