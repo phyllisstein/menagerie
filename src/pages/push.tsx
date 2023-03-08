@@ -85,13 +85,15 @@ function PushPage () {
 
           const last = values.pop()
 
-          const rotateY = ((last.position[0] * window.innerWidth) - window.innerWidth / 2) / window.innerWidth * 90
-          const rotateX = ((last.position[1] * window.innerHeight) - window.innerHeight / 2) / window.innerHeight * -90
+          if (last) {
+            const rotateY = ((last.position[0] * window.innerWidth) - window.innerWidth / 2) / window.innerWidth * 90
+            const rotateX = ((last.position[1] * window.innerHeight) - window.innerHeight / 2) / window.innerHeight * -90
 
-          api.start({
-            rotateX,
-            rotateY,
-          })
+            api.start({
+              rotateX,
+              rotateY,
+            })
+          }
 
           setResetPending(true)
           setWisps(state)
@@ -117,10 +119,6 @@ function PushPage () {
           ],
           timestamp: performance.now(),
         })
-
-        if (last && !resetPending) {
-          setResetPending(true)
-        }
       },
     },
     {
