@@ -14,16 +14,35 @@ export const socket: NextWebSocketHandler = (ws, req) => {
 
     ws.on('message', message => {
       console.log(message.toString())
+      const data = JSON.parse(message.toString())
 
-      ws.send(JSON.stringify(
-        {
+      sockets.forEach(socket => {
+        socket.send(
+          JSON.stringify({
+            type: 'update',
+            position: [
+              Math.floor(Math.random() * 250),
+              Math.floor(Math.random() * 250),
+              Math.floor(Math.random() * 250),
+            ],
+          }),
+        )
+      })
+    })
+
+    sockets.forEach(socket => {
+      console.log(socket)
+
+      socket.send(
+        JSON.stringify({
+          type: 'update',
           position: [
-            25,
-            250,
-            25,
+            Math.floor(Math.random() * 250),
+            Math.floor(Math.random() * 250),
+            Math.floor(Math.random() * 250),
           ],
-        },
-      ))
+        }),
+      )
     })
   }
 }

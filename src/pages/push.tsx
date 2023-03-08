@@ -40,7 +40,7 @@ interface WispsData {
 function Wisp () {
   const idRef = useRef<string>()
   const socketRef = useRef<WebSocket>()
-  const [wisps, setWisps] = useState<WispsData>({})
+  const [wisps, setWisps] = useState<WispsData[]>([])
 
   useEffect(() => {
     const createSocket = async () => {
@@ -72,11 +72,8 @@ function Wisp () {
 
           console.log(data)
 
-          setWisps({
-            [id]: {
-              id,
-              position: data.position,
-            },
+          setWisps(wisps => {
+            return wisps?.concat(data)
           })
         })
       }
@@ -85,12 +82,14 @@ function Wisp () {
     void createSocket()
   }, [])
 
+  console.log(wisps)
+
   return (
     <>
       {
-        Object.values(wisps).map(({ id, position: [x, y, z] }) => {
-          return (
-            <svg key={ id } style={{ width: '50px', height: '50px', transform: `translate3d(${ x }px, ${ y }px, ${ z }px)` }} viewBox='0 0 50 50'>
+        wisps?.map(({ position }) => {
+          return position && (
+            <svg style={{ width: '50px', height: '50px', transform: `translate3d(${ position[0] }px, ${ position[1] }px, ${ position[2] }px)` }} viewBox='0 0 50 50'>
               <circle cx='50%' cy='50%' r='50%' fill='#000000' />
             </svg>
           )
