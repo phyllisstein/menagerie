@@ -1,7 +1,8 @@
 import { animated, config, to, useSpring } from '@react-spring/web'
 import { useGesture } from '@use-gesture/react'
+import { gsap } from 'gsap'
 import pWaitFor from 'p-wait-for'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import io, { type Socket } from 'socket.io-client'
 import styled from 'styled-components'
 
@@ -44,7 +45,7 @@ function Wisp () {
   const [wisps, setWisps] = useState<WispsData>({})
 
   useEffect(() => {
-    const createSocket = async () => {
+    const createSocket = () => {
       let socket = socketRef.current
       let id = idRef.current
 
@@ -62,17 +63,9 @@ function Wisp () {
         socket = io('http://localhost:3030')
         socketRef.current = socket
 
-        socket.emit('update', {
-          id,
-          position: [
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-          ],
-        })
-
         socket.on('update', data => {
           const { state } = data
+
           setWisps(state)
         })
       }
@@ -81,20 +74,49 @@ function Wisp () {
     void createSocket()
   }, [])
 
-  console.log(wisps)
+  useGesture(
+    {
+      onMove: ({ active, xy: [x, y] }) => {
+        const pctX = x / window.innerWidth
+        const pctY = y / window.innerHeight
+
+        socketRef.current.emit('update', {
+          id: idRef.current,
+          position: [
+            Math.round(pctX * 100) / 100,
+            Math.round(pctY * 100) / 100,
+            0,
+          ],
+        })
+      },
+    },
+    {
+      target: typeof window !== 'undefined' ? window : undefined,
+    },
+  )
+
+  useEffect(() => {
+    Object.values(wisps).forEach(wisp => {
+      gsap.to(`#circle-${ wisp.id }`, {
+        x: `${ wisp.position[0] * window.innerWidth - 25 }px`,
+        y: `${ wisp.position[1] * window.innerHeight - 75 }px`,
+        z: `${ wisp.position[2] * window.innerHeight }px`,
+      })
+    })
+  }, [wisps])
 
   return (
-    <>
+    <div style={{ transformStyle: 'preserve-3d', perspective: '1000px' }}>
       {
         Object.values(wisps).map(({ id, position }) => {
           return position && (
-            <svg key={ id } style={{ width: '50px', height: '50px', transform: `translate3d(${ position[0] }px, ${ position[1] }px, ${ position[2] }px)` }} viewBox='0 0 50 50'>
+            <svg key={ id } id={ `circle-${ id }` } style={{ width: '50px', height: '50px' }} viewBox='0 0 50 50'>
               <circle cx='50%' cy='50%' r='50%' fill='#000000' />
             </svg>
           )
         })
       }
-    </>
+    </div>
   )
 }
 

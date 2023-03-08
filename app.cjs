@@ -2,8 +2,6 @@
 
 const { createServer } = require('http')
 
-const cors = require('cors')
-const express = require('express')
 const next = require('next')
 const { Server } = require('socket.io')
 
@@ -18,29 +16,22 @@ const dev = NODE_ENV === 'development'
 const portNumber = Number.parseInt(PORT, 10)
 const wsPortNumber = Number.parseInt(WS_PORT, 10)
 
-const wsApp = express()
-wsApp.use(cors())
-
-const wsServer = createServer(wsApp)
-const io = new Server(wsServer, {
+const io = new Server(wsPortNumber, {
   cors: {
     origin: '*',
   },
 })
 
 const state = {}
-const sockets = {}
+const sockets = new WeakMap()
 
 io.on('connection', socket => {
-  console.log('a user connected')
-
   socket.on('disconnect', () => {
-    console.log('user disconnected')
-    const id = sockets[socket.id]
+    if (!sockets.has(socket)) return
+
+    const id = sockets.get(socket)
     delete state[id]
-    delete sockets[socket.id]
-    console.log(sockets)
-    console.log(state)
+    sockets.delete(socket)
 
     io.emit('update', {
       state,
@@ -48,18 +39,13 @@ io.on('connection', socket => {
   })
 
   socket.on('update', data => {
+    sockets.set(socket, data.id)
     state[data.id] = data
-    sockets[socket.id] = data.id
 
-    console.log(sockets)
     io.emit('update', {
       state,
     })
   })
-})
-
-wsServer.listen(wsPortNumber, HOSTNAME, err => {
-  if (err) throw err
 })
 
 const app = next({ dev })
