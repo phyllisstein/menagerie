@@ -43,7 +43,6 @@ function PushPage () {
   const [resetPending, setResetPending] = useState(false)
 
   const [props, api] = useSpring(() => ({
-    config: config.molasses,
     rotateX: 0,
     rotateY: 0,
   }))
