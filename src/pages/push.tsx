@@ -63,69 +63,37 @@ function Wisp () {
 
         await pWaitFor(() => socket.readyState === WebSocket.OPEN)
 
+        socket.send(
+          JSON.stringify({ id }),
+        )
+
         socket.addEventListener('message', event => {
-          console.log(JSON.stringify(event))
           const data = JSON.parse(event.data)
 
-          setWisps(w => {
-            if (data.type === 'update') {
-              return {
-                ...w,
-                [data.id]: {
-                  id: data.id,
-                  position: data.position,
-                },
-              }
-            }
+          console.log(data)
+
+          setWisps({
+            [id]: {
+              id,
+              position: data.position,
+            },
           })
         })
-
-        socket.send(
-          JSON.stringify({
-            type: 'register',
-            id,
-          }),
-        )
       }
     }
 
     void createSocket()
   }, [])
 
-  useEffect(() => {
-    const socket = socketRef.current
-
-    if (socket) {
-      const interval = setInterval(() => {
-        socket.send(
-          JSON.stringify({
-            type: 'update',
-            position: [
-              Math.random() * 100,
-              Math.random() * 100,
-              Math.random() * 100,
-            ],
-          }),
-        )
-      }, 1000)
-
-      return () => {
-        clearInterval(interval)
-      }
-    }
-  }, [])
-
   return (
     <>
       {
-        Object.values(wisps).map(wisp => {
-          if (wisp.id && Array.isArray(wisp.position)) {
-            return (
-              <svg key={ id } style={{ width: '50px', height: '50px', transform: `translate3d(${ x }px, ${ y }px, ${ z }px)` }} viewBox='0 0 50 50'>
-                <circle cx='50%' cy='50%' r='50%' fill='#000000' />
-              </svg>
-            )
-          }
+        Object.values(wisps).map(({ id, position: [x, y, z] }) => {
+          return (
+            <svg key={ id } style={{ width: '50px', height: '50px', transform: `translate3d(${ x }px, ${ y }px, ${ z }px)` }} viewBox='0 0 50 50'>
+              <circle cx='50%' cy='50%' r='50%' fill='#000000' />
+            </svg>
+          )
         })
       }
     </>
