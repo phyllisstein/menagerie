@@ -2,7 +2,6 @@ import { animated, config, to, useSpring } from '@react-spring/web'
 import { useGesture } from '@use-gesture/react'
 import pWaitFor from 'p-wait-for'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { io, type Socket } from 'socket.io-client'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -40,35 +39,50 @@ interface WispsData {
 
 function Wisp () {
   const idRef = useRef<string>()
-  const socketRef = useRef<Socket>()
+  const socketRef = useRef<WebSocket>()
   const [wisps, setWisps] = useState<WispsData>({})
 
   useEffect(() => {
-    let socket = socketRef.current
-    let id = idRef.current
+    const createSocket = async () => {
+      let socket = socketRef.current
+      let id = idRef.current
 
-    if (!id) {
-      id =
+      if (!id) {
+        id =
         typeof crypto === 'undefined'
           ? Math.random().toString(36).substring(7)
           : crypto.randomUUID()
 
-      idRef.current = id
+        idRef.current = id
+      }
+
+      if (!socket) {
+        // socket = io('wss://cloudflare-wisps-dev.daniel8056.workers.dev/')
+        socket = new WebSocket('ws://localhost:3000/api/wisps')
+        socketRef.current = socket
+
+        await pWaitFor(() => socket.readyState === WebSocket.OPEN)
+
+        socket.send(
+          JSON.stringify({ id }),
+        )
+
+        socket.addEventListener('message', event => {
+          const data = JSON.parse(event.data)
+
+          console.log(data)
+
+          setWisps({
+            [id]: {
+              id,
+              position: data.position,
+            },
+          })
+        })
+      }
     }
 
-    if (!socket) {
-      // socket = io('wss://cloudflare-wisps-dev.daniel8056.workers.dev/')
-      socket = io('ws://127.0.0.1:3000', {
-        path: '/api/wisps',
-      })
-      socketRef.current = socket
-    }
-
-    socket.emit('wisp', { id })
-
-    socket.on('wisp', (data: Wisp) => {
-      setWisps(data)
-    })
+    void createSocket()
   }, [])
 
   return (
