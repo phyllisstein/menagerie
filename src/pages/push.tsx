@@ -17,7 +17,12 @@ const Container = styled.div`
 
 const Face = styled(animated.div)`
   position: absolute;
+  top: 50%;
+  left: 50%;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 25vw;
   height: 25vh;
 
@@ -148,16 +153,16 @@ function PushPage () {
   return (
     <>
       <Container>
-        <Viewer style={{ transform: 'rotateY(0deg)' }}>
+        <Viewer id='viewer' style={{ transform: rotatesYRef.current ? 'rotateY(180deg)' : 'rotateY(0deg)' }}>
           <Face color='blue400' style={{
-            transform: to([props.rotateX, props.rotateY], (x, y) => `translate3d(-50%, -50%, 2rem) rotateX(${ x }deg) rotateY(${ y }deg)`),
+            transform: to([props.rotateX, props.rotateY], (x, y) => `translate(-50%, -50%) rotateX(${ x }deg) rotateY(${ y }deg) translateZ(25vw)`),
           }}>
-            <h1 style={{ fontSize: '2.5rem' }}>1</h1>
+            <h1 style={{ fontSize: '1rem', color: '#FFF' }}>Front</h1>
           </Face>
           <Face color='red400' style={{
-            transform: to([props.rotateX, props.rotateY], (x, y) => `translate3d(-50%, -50%, 0) rotateX(${ x }deg) rotateY(${ y }deg) rotateY(180deg)`),
+            transform: to([props.rotateX, props.rotateY], (x, y) => `translate(-50%, -50%) rotateX(${ x }deg) rotateY(${ y }deg) translateZ(-25vw) rotateY(180deg)`),
           }}>
-            <h1 style={{ fontSize: '2.5rem' }}>2</h1>
+            <h1 style={{ fontSize: '1rem', color: '#FFF' }}>Back</h1>
           </Face>
           {
             Object.values(wisps).map(({ id }) => {
