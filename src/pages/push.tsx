@@ -12,7 +12,7 @@ const Container = styled.div`
   left: 50%;
 
   transform-style: preserve-3d;
-  perspective: 1000px;
+  perspective: 750px;
 `
 
 const Face = styled(animated.div)`
@@ -76,9 +76,10 @@ function PushPage () {
           const values = Object.values(state).sort((a, b) => a.timestamp - b.timestamp)
           values.forEach(wisp => {
             gsap.to(`#wisp-${ wisp.id }`, {
-              x: `${ wisp.position[0] * window.innerWidth - 25 }px`,
-              y: `${ wisp.position[1] * window.innerHeight - 75 }px`,
-              z: `${ wisp.position[2] * window.innerHeight }px`,
+              x: `${ (wisp.position[0] - 0.5) * window.innerWidth }px`,
+              xPercent: -50,
+              y: `${ (wisp.position[1] - 0.5) * window.innerHeight }px`,
+              yPercent: -50,
             })
           })
 
@@ -112,11 +113,11 @@ function PushPage () {
         socketRef.current.emit('update', {
           id: idRef.current,
           position: [
-            Math.round(pctX * 100) / 100,
-            Math.round(pctY * 100) / 100,
-            0,
+            pctX,
+            pctY,
+            rotatesYRef.current,
           ],
-          timestamp: performance.now(),
+          timestamp: new Date().getTime(),
         })
       },
     },
@@ -136,7 +137,7 @@ function PushPage () {
         })
 
         setResetPending(false)
-      }, 500)
+      }, 1500)
     }
 
     return () => {
@@ -158,17 +159,17 @@ function PushPage () {
           }}>
             <h1 style={{ fontSize: '2.5rem' }}>2</h1>
           </Face>
+          {
+            Object.values(wisps).map(({ id }) => {
+              return id && (
+                <svg key={ id } id={ `wisp-${ id }` } style={{ width: '50px', height: '50px', position: 'absolute' }} viewBox='0 0 50 50'>
+                  <circle cx='50%' cy='50%' r='50%' fill='#000000' />
+                </svg>
+              )
+            })
+          }
         </Viewer>
       </Container>
-      {
-        Object.values(wisps).map(({ id, position }) => {
-          return position && (
-            <svg key={ id } id={ `wisp-${ id }` } style={{ width: '50px', height: '50px' }} viewBox='0 0 50 50'>
-              <circle cx='50%' cy='50%' r='50%' fill='#000000' />
-            </svg>
-          )
-        })
-      }
     </>
   )
 }
