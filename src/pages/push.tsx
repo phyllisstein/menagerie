@@ -1,8 +1,7 @@
-import { animated, config, to, useSpring } from '@react-spring/web'
+import { animated, to, useSpring } from '@react-spring/web'
 import { useGesture } from '@use-gesture/react'
 import { gsap } from 'gsap'
-import pWaitFor from 'p-wait-for'
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import io, { type Socket } from 'socket.io-client'
 import styled from 'styled-components'
 
