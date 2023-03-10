@@ -35,4 +35,4 @@ EXPOSE 3030
 
 COPY . ./
 
-CMD ["node", "app.cjs"]
+CMD ["node", "app.mjs"]

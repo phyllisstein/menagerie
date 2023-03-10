@@ -5,9 +5,9 @@
   "license": "GPL-3.0-or-later",
   "scripts": {
     "build": "next build",
-    "dev": "node app.cjs",
+    "dev": "node app.mjs",
     "lint": "next lint",
-    "start": "node app.cjs"
+    "start": "node app.mjs"
   },
   "dependencies": {
     "@fortawesome/fontawesome-common-types": "^6.3.0",

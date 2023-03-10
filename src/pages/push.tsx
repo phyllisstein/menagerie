@@ -53,12 +53,14 @@ function PushPage () {
 
   const idRef = useRef<string>()
   const socketRef = useRef<Socket>()
+  const rotatesYRef = useRef<boolean>(Math.random() > 0.5)
   const [wisps, setWisps] = useState<WispsData>({})
 
   useEffect(() => {
     const createSocket = () => {
       let socket = socketRef.current
       let id = idRef.current
+      const rotatesY = rotatesYRef.current
 
       if (!id) {
         id =
@@ -71,7 +73,7 @@ function PushPage () {
 
       if (!socket) {
         // socket = io('wss://cloudflare-wisps-dev.daniel8056.workers.dev/')
-        socket = io('http://localhost:3030')
+        socket = io('http://localhost:3000')
         socketRef.current = socket
 
         socket.on('update', data => {
