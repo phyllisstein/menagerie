@@ -57,6 +57,7 @@
     "@next/eslint-plugin-next": "^13.1.6",
     "@stylelint/postcss-css-in-js": "^0.38.0",
     "@svgr/webpack": "^6.5.1",
+    "@total-typescript/ts-reset": "^0.4.2",
     "@types/chroma-js": "^2.4.0",
     "@types/eslint": "^8.21.1",
     "@types/lodash": "^4.14.191",
