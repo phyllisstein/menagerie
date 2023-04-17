@@ -44,6 +44,12 @@ io.on('connection', socket => {
       state,
     })
   })
+
+  socket.on('ping', () => {
+    socket.emit('pong', {
+      state,
+    })
+  })
 })
 const app = next({ dev })
 const handle = app.getRequestHandler()
