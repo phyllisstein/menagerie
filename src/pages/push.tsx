@@ -1,7 +1,8 @@
 import { animated, to, useSpring } from '@react-spring/web'
 import { useGesture } from '@use-gesture/react'
 import { gsap } from 'gsap'
-import { useEffect, useRef, useState } from 'react'
+import _ from 'lodash'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import io, { type Socket } from 'socket.io-client'
 import styled from 'styled-components'
 
@@ -10,8 +11,8 @@ const Container = styled.div`
   top: 50%;
   left: 50%;
 
-  transform-style: preserve-3d;
-  perspective: 750px;
+  /* transform-style: preserve-3d; */
+  /* perspective: 750px; */
 `
 
 const Face = styled(animated.div)`
@@ -31,7 +32,7 @@ const Face = styled(animated.div)`
 `
 
 const Viewer = styled.div`
-  transform-style: preserve-3d;
+  /* transform-style: preserve-3d; */
 `
 
 interface Wisp {
@@ -51,58 +52,63 @@ function PushPage () {
     rotateY: 0,
   }))
 
-  const idRef = useRef<string>()
+  const idRef = useRef<string>(
+    typeof crypto === 'undefined'
+      ? Math.random().toString(36).substring(7)
+      : crypto.randomUUID(),
+  )
   const socketRef = useRef<Socket>()
-  const rotatesYRef = useRef<boolean>(Math.random() > 0.5)
+  const flippedRef = useRef<boolean>(Math.random() > 0.5)
   const [wisps, setWisps] = useState<WispsData>({})
 
   useEffect(() => {
     const createSocket = () => {
-      let socket = socketRef.current
-      let id = idRef.current
-      const rotatesY = rotatesYRef.current
-
-      if (!id) {
-        id =
-        typeof crypto === 'undefined'
-          ? Math.random().toString(36).substring(7)
-          : crypto.randomUUID()
-
-        idRef.current = id
-      }
-
-      if (!socket) {
-        // socket = io('wss://cloudflare-wisps-dev.daniel8056.workers.dev/')
-        socket = io('http://localhost:3000')
+      if (!socketRef.current) {
+        // const socket = io('wss://cloudflare-wisps-dev.daniel8056.workers.dev/')
+        const socket = io('http://localhost:3000')
         socketRef.current = socket
 
         socket.on('update', data => {
           const { state } = data
 
-          const values = Object.values(state).sort((a, b) => a.timestamp - b.timestamp)
-          values.forEach(wisp => {
-            gsap.to(`#wisp-${ wisp.id }`, {
-              x: `${ (wisp.position[0] - 0.5) * window.innerWidth }px`,
-              xPercent: -50,
-              y: `${ (wisp.position[1] - 0.5) * window.innerHeight }px`,
-              yPercent: -50,
-            })
-          })
+          const values = Object.values(state)
 
-          const last = values.pop()
+          values
+            .forEach(wisp => {
+              const mirror = flippedRef.current !== wisp.position[2] ? -1 : 1
+              const baseX = (wisp.position[0] - 0.5) * window.innerWidth
+              const baseY = (wisp.position[1] - 0.5) * window.innerHeight
+
+              gsap.to(`#wisp-${ wisp.id }`, {
+                x: `${ baseX }px`,
+                xPercent: -50,
+                y: `${ baseY }px`,
+                yPercent: -50,
+              })
+            })
+
+          const last = values.sort((a, b) => a.timestamp - b.timestamp).pop()
 
           if (last) {
-            const rotateY = ((last.position[0] * window.innerWidth) - window.innerWidth / 2) / window.innerWidth * 90
-            const rotateX = ((last.position[1] * window.innerHeight) - window.innerHeight / 2) / window.innerHeight * -90
+            // const rotateX = ((last.position[1] - 0.5) * window.innerHeight) / window.innerHeight * -180 // rotating around x to match vertical movement with remote pointer y
+            // const rotateY = ((last.position[0] - 0.5) * window.innerWidth) / window.innerWidth * 180 // rotating around y to match horizontal movement with remote pointer x
+            const rotateX = (last.position[1] - 0.5) * -180 // rotating around x to match vertical movement with remote pointer y; positive is up
+            const rotateY = (last.position[0] - 0.5) * 180 // rotating around y to match horizontal movement with remote pointer x; positive is right
 
+            // if our canvas is looking at the back of the remote pointer, we need to invert the vertical movement
+            const invertVerticalMovement = flippedRef.current ? -1 : 1
             api.start({
-              rotateX,
-              rotateY,
+              rotateX: rotateX * invertVerticalMovement,
+              rotateY: rotateY,
             })
           }
 
           setResetPending(true)
           setWisps(state)
+        })
+
+        socket.on('pong', data => {
+          console.log('pong:', data)
         })
       }
     }
@@ -110,18 +116,33 @@ function PushPage () {
     void createSocket()
   }, [])
 
+  const emitUpdate = _.throttle((x: number, y: number) => {
+    const pctX = x / window.innerWidth
+    const pctY = y / window.innerHeight
+
+    socketRef.current?.emit('update', {
+      id: idRef.current,
+      position: [
+        pctX,
+        pctY,
+        flippedRef.current,
+      ],
+      timestamp: new Date().getTime(),
+    })
+  }, 100)
+
   useGesture(
     {
-      onMove: ({ active, last, xy: [xPosition, yPosition] }) => {
-        const pctX = xPosition / window.innerWidth
-        const pctY = yPosition / window.innerHeight
+      onMove: ({ active, last, xy: [x, y] }) => {
+        const pctX = x / window.innerWidth
+        const pctY = y / window.innerHeight
 
-        socketRef.current.emit('update', {
+        socketRef.current?.emit('update', {
           id: idRef.current,
           position: [
             pctX,
             pctY,
-            rotatesYRef.current,
+            flippedRef.current,
           ],
           timestamp: new Date().getTime(),
         })
@@ -153,8 +174,8 @@ function PushPage () {
 
   return (
     <>
-      <Container>
-        <Viewer id='viewer' style={{ transform: rotatesYRef.current ? 'rotateY(180deg)' : 'rotateY(0deg)' }}>
+      <Container onClick={ () => socketRef.current?.emit('ping') }>
+        <Viewer id='viewer' style={{ transform: flippedRef.current ? 'rotateY(180deg)' : 'rotateY(0deg)' }}>
           <Face color='blue400' style={{
             transform: to([props.rotateX, props.rotateY], (x, y) => `translate(-50%, -50%) rotateX(${ x }deg) rotateY(${ y }deg) translateZ(25vw)`),
           }}>
