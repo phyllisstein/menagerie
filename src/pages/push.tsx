@@ -26,13 +26,19 @@ const Face = styled(animated.div)`
   width: 25vw;
   height: 25vh;
 
-  background-color: ${ ({ color, theme }) => theme.paletteLight.css[color] };
+  background-color: ${ ({ $color, theme }) => theme.paletteLight.css[$color] };
+  transform-origin: center center;
   backface-visibility: visible;
   opacity: 0.8;
 `
 
 const Viewer = styled.div`
-  /* transform-style: preserve-3d; */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform-style: preserve-3d;
+  perspective: 750px;
 `
 
 interface Wisp {
@@ -75,14 +81,13 @@ function PushPage () {
 
           values
             .forEach(wisp => {
-              const mirror = flippedRef.current !== wisp.position[2] ? -1 : 1
-              const baseX = (wisp.position[0] - 0.5) * window.innerWidth
-              const baseY = (wisp.position[1] - 0.5) * window.innerHeight
+              const x = wisp.position[0] * window.innerWidth
+              const y = wisp.position[1] * window.innerHeight
 
               gsap.to(`#wisp-${ wisp.id }`, {
-                x: `${ baseX }px`,
+                x: `${ x }px`,
                 xPercent: -50,
-                y: `${ baseY }px`,
+                y: `${ y }px`,
                 yPercent: -50,
               })
             })
@@ -90,15 +95,23 @@ function PushPage () {
           const last = values.sort((a, b) => a.timestamp - b.timestamp).pop()
 
           if (last) {
+            const mirror = last.position[2] ? -1 : 1
             // const rotateX = ((last.position[1] - 0.5) * window.innerHeight) / window.innerHeight * -180 // rotating around x to match vertical movement with remote pointer y
             // const rotateY = ((last.position[0] - 0.5) * window.innerWidth) / window.innerWidth * 180 // rotating around y to match horizontal movement with remote pointer x
-            const rotateX = (last.position[1] - 0.5) * -180 // rotating around x to match vertical movement with remote pointer y; positive is up
-            const rotateY = (last.position[0] - 0.5) * 180 // rotating around y to match horizontal movement with remote pointer x; positive is right
+            const rotateX = (last.position[1] - 0.5) * 90 // rotating around x to match vertical movement with remote pointer y; positive is up
+            const rotateY = (last.position[0] - 0.5) * 90 // rotating around y to match horizontal movement with remote pointer x; positive is right
+
+            // console.log(last.position[2], flippedRef.current, idRef.current)
+            // if (flippedRef.current) {
+            //   rotateX *= -1
+            // } else {
+            //   rotateY *= -1
+            // }
 
             // if our canvas is looking at the back of the remote pointer, we need to invert the vertical movement
             const invertVerticalMovement = flippedRef.current ? -1 : 1
             api.start({
-              rotateX: rotateX * invertVerticalMovement,
+              rotateX: rotateX,
               rotateY: rotateY,
             })
           }
@@ -172,17 +185,24 @@ function PushPage () {
     }
   }, [resetPending])
 
+  useEffect(() => {
+    gsap.set('#viewer', {
+      // rotateY: flippedRef.current ? 180 : 0,
+      rotateY: 0,
+    })
+  })
+
   return (
     <>
       <Container onClick={ () => socketRef.current?.emit('ping') }>
-        <Viewer id='viewer' style={{ transform: flippedRef.current ? 'rotateY(180deg)' : 'rotateY(0deg)' }}>
-          <Face color='blue400' style={{
-            transform: to([props.rotateX, props.rotateY], (x, y) => `translate(-50%, -50%) rotateX(${ x }deg) rotateY(${ y }deg) translateZ(25vw)`),
+        <Viewer id='viewer'>
+          <Face $color='blue400' style={{
+            transform: to([props.rotateX, props.rotateY], (x, y) => `translate(-50%, -50%) translateZ(50px)`),
           }}>
             <h1 style={{ fontSize: '1rem', color: '#FFF' }}>Front</h1>
           </Face>
-          <Face color='red400' style={{
-            transform: to([props.rotateX, props.rotateY], (x, y) => `translate(-50%, -50%) rotateX(${ x }deg) rotateY(${ y }deg) translateZ(-25vw) rotateY(180deg)`),
+          <Face $color='red400' style={{
+            transform: to([props.rotateX, props.rotateY], (x, y) => `translate(-50%, -50%) translateZ(-50px) rotateY(180deg)`),
           }}>
             <h1 style={{ fontSize: '1rem', color: '#FFF' }}>Back</h1>
           </Face>
