@@ -86,9 +86,6 @@ const FrontPeephole = styled.div`
   mask-size: 100%;
 `
 
-function HatchPage () {
-  const [frontPurple, setFrontPurple] = useState(false)
-
   const identityMatrix = `
     1   0     0     0   0
     0     1   0       0 0
@@ -109,6 +106,10 @@ function HatchPage () {
     0     0     0   0   0
     1     0     0     1   0
   `
+
+function HatchPage () {
+  const containerRef = useRef(null)
+  const [frontPurple, setFrontPurple] = useState(false)
 
   const [values, api] = useSpring(() => ({
     config: config.molasses,
