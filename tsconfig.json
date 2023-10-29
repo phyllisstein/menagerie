@@ -2,7 +2,7 @@
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "alwaysStrict": true,
+    "alwaysStrict": false,
     "baseUrl": "./",
     "checkJs": true,
     "esModuleInterop": true,
@@ -18,7 +18,7 @@
     "noEmit": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "strict": true,
+    "strict": false,
     "paths": {
       "*": [
         "*",

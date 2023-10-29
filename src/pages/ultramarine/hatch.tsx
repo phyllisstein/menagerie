@@ -86,26 +86,26 @@ const FrontPeephole = styled.div`
   mask-size: 100%;
 `
 
-  const identityMatrix = `
-    1   0     0     0   0
-    0     1   0       0 0
-    0     0     1   0   0
-    0     0     0     1   0
-  `
+const identityMatrix = `
+  1   0     0     0   0
+  0     1   0       0 0
+  0     0     1   0   0
+  0     0     0     1   0
+`
 
-  const purpleMatrix = `
-    1   1     0     0   0
-    0     0.5   0       0 0
-    1     0     1   0   0
-    0     0     0     1   0
-  `
+const purpleMatrix = `
+  1   1     0     0   0
+  0     0.5   0       0 0
+  1     0     1   0   0
+  0     0     0     1   0
+`
 
-  const redMatrix = `
-    0.5   0     0     0   0
-    0     0   0       0 0
-    0     0     0   0   0
-    1     0     0     1   0
-  `
+const redMatrix = `
+  0.5   0     0     0   0
+  0     0   0       0 0
+  0     0     0   0   0
+  1     0     0     1   0
+`
 
 function HatchPage () {
   const containerRef = useRef(null)
@@ -141,43 +141,43 @@ function HatchPage () {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'slow' } })
 
-    if (active) {
-      tl
-        .to('#front-peephole', {
-          rotateX: `${ offsetY }deg`,
-          rotateY: `${ offsetX }deg`,
-        }, 0)
-        .to('#mid-peephole', {
-          // perspective: (x + window.innerWidth) * 2,
-          z: `${ offsetY / 4 }rem`,
-        }, 0)
-        .to('#mid-peephole', {
-          rotateY: `${ -offsetX }deg`,
+      if (active) {
+        tl
+          .to('#front-peephole', {
+            rotateX: `${ offsetY }deg`,
+            rotateY: `${ offsetX }deg`,
+          }, 0)
+          .to('#mid-peephole', {
+            // perspective: (x + window.innerWidth) * 2,
+            z: `${ offsetY / 4 }rem`,
+          }, 0)
+          .to('#mid-peephole', {
+            rotateY: `${ -offsetX }deg`,
+          })
+      }
+
+      if (last) {
+        tl
+          .to('#front-peephole', {
+            rotateX: 0,
+            rotateY: 0,
+          }, 0)
+          .to('#mid-peephole', {
+            // perspective: 1000,
+            z: 0,
+            // rotateY: 0,
+          }, 0)
+          .to('#mid-peephole', {
+            rotateY: 0,
+          })
+
+        api.start({
+          washOne: identityMatrix,
+          washTwo: identityMatrix,
         })
-    }
 
-    if (last) {
-      tl
-        .to('#front-peephole', {
-          rotateX: 0,
-          rotateY: 0,
-        }, 0)
-        .to('#mid-peephole', {
-          // perspective: 1000,
-          z: 0,
-          // rotateY: 0,
-        }, 0)
-        .to('#mid-peephole', {
-          rotateY: 0,
-        })
-
-      api.start({
-        washOne: identityMatrix,
-        washTwo: identityMatrix,
-      })
-
-      setFrontPurple(fp => !fp)
-    }
+        setFrontPurple(fp => !fp)
+      }
 
       return () => ctx.revert()
     }, containerRef)
