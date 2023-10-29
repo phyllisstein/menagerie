@@ -1,10 +1,12 @@
 import { animated, config, useSpring } from '@react-spring/web'
 import { useGesture } from '@use-gesture/react'
 import * as BodyScrollLock from 'body-scroll-lock'
+import { interpolate } from 'd3-interpolate'
+import { gsap } from 'gsap'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { gsap } from 'gsap'
+const interpolateRotation = interpolate(-45, 45)
 
 const AnimatedFeColorMatrix = animated('feColorMatrix')
 
@@ -26,8 +28,17 @@ const MiddleVideo = styled.video`
   width: 100vw;
   height: 100vh;
 
-  transform: translate3d(-50%, -50%, -5rem);
+  transform: translate3d(-50%, -50%, 0);
   filter: url(#animated-wash-2);
+
+  -webkit-mask-image: url('/assets/hatch/nsm.png');
+  mask-image: url('/assets/hatch/nsm.png');
+  -webkit-mask-position: 50% 50%;
+  mask-position: 50% 50%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100%;
+  mask-size: 100%;
 `
 
 const FrontVideo = styled.video`
@@ -40,6 +51,16 @@ const FrontVideo = styled.video`
 
   transform: translate3d(-50%, -50%, 0);
   filter: url(#animated-wash);
+
+
+  -webkit-mask-image: url('/assets/hatch/cdm.png');
+  mask-image: url('/assets/hatch/cdm.png');
+  -webkit-mask-position: 50% 50%;
+  mask-position: 50% 50%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100%;
+  mask-size: 100%;
 `
 
 const MidPeephole = styled.div`
@@ -52,11 +73,6 @@ const MidPeephole = styled.div`
 
   transform-style: preserve-3d;
   perspective: 1000px;
-
-  mask-image: url('/assets/hatch/mkpm.png');
-  mask-position: 50% 50%;
-  mask-repeat: no-repeat;
-  mask-size: 50% 50%;
 `
 
 const FrontPeephole = styled.div`
@@ -69,11 +85,6 @@ const FrontPeephole = styled.div`
 
   transform-style: preserve-3d;
   perspective: 1000px;
-
-  mask-image: url('/assets/hatch/cdm.png');
-  mask-position: 50% 50%;
-  mask-repeat: no-repeat;
-  mask-size: 50% 50%;
 `
 
 function HatchPage () {
@@ -117,8 +128,8 @@ function HatchPage () {
   }, [])
 
   const handler = ({ active, first, last, xy: [x, y] }) => {
-    const offsetX = (window.innerWidth - x) / window.innerWidth * 100
-    const offsetY = (window.innerHeight - y) / window.innerHeight * 100
+    const offsetX = (x - window.innerWidth) / window.innerWidth * 100 + 50
+    const offsetY = (window.innerHeight - y) / window.innerHeight * 100 - 50
 
     if (first) {
       api.start({
@@ -127,33 +138,44 @@ function HatchPage () {
       })
     }
 
+    const tl = gsap.timeline()
+
     if (active) {
-      gsap.to('#front-peephole', {
-        rotateX: `${ offsetY / 2 }deg`,
-        rotateY: `${ offsetX / 2 }deg`,
-      })
-      gsap.to('#mid-peephole', {
-        perspective: (x + window.innerWidth) * 2,
-        z: `${ -offsetY / 2 }px`,
-      })
+      tl
+        .to('#front-peephole', {
+          rotateX: `${ offsetY }deg`,
+          rotateY: `${ offsetX }deg`,
+        }, 0)
+        .to('#mid-peephole', {
+          // perspective: (x + window.innerWidth) * 2,
+          z: `${ offsetY / 4 }rem`,
+        }, 0)
+        .to('#mid-peephole', {
+          rotateY: `${ -offsetX }deg`,
+        })
     }
 
     if (last) {
-      gsap.to('#front-peephole', {
-        rotateX: 0,
-        rotateY: 0,
-      })
-      gsap.to('#mid-peephole', {
-        perspective: 1000,
-        z: 0,
-      })
+      tl
+        .to('#front-peephole', {
+          rotateX: 0,
+          rotateY: 0,
+        }, 0)
+        .to('#mid-peephole', {
+          // perspective: 1000,
+          z: 0,
+          // rotateY: 0,
+        }, 0)
+        .to('#mid-peephole', {
+          rotateY: 0,
+        })
 
       api.start({
         washOne: identityMatrix,
         washTwo: identityMatrix,
       })
 
-      setFrontPurple(!frontPurple)
+      setFrontPurple(fp => !fp)
     }
   }
 
