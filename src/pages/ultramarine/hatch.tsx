@@ -30,15 +30,6 @@ const MiddleVideo = styled.video`
 
   transform: translate3d(-50%, -50%, 0);
   filter: url(#animated-wash-2);
-
-  -webkit-mask-image: url('/assets/hatch/nsm.png');
-  mask-image: url('/assets/hatch/nsm.png');
-  -webkit-mask-position: 50% 50%;
-  mask-position: 50% 50%;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: 100%;
-  mask-size: 100%;
 `
 
 const FrontVideo = styled.video`
@@ -51,16 +42,6 @@ const FrontVideo = styled.video`
 
   transform: translate3d(-50%, -50%, 0);
   filter: url(#animated-wash);
-
-
-  -webkit-mask-image: url('/assets/hatch/cdm.png');
-  mask-image: url('/assets/hatch/cdm.png');
-  -webkit-mask-position: 50% 50%;
-  mask-position: 50% 50%;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: 100%;
-  mask-size: 100%;
 `
 
 const MidPeephole = styled.div`
@@ -73,6 +54,15 @@ const MidPeephole = styled.div`
 
   transform-style: preserve-3d;
   perspective: 1000px;
+
+  -webkit-mask-image: url('/assets/hatch/cdm.png');
+  mask-image: url('/assets/hatch/cdm.png');
+  -webkit-mask-position: 50% 50%;
+  mask-position: 50% 50%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100%;
+  mask-size: 100%;
 `
 
 const FrontPeephole = styled.div`
@@ -85,6 +75,15 @@ const FrontPeephole = styled.div`
 
   transform-style: preserve-3d;
   perspective: 1000px;
+
+  -webkit-mask-image: url('/assets/hatch/nsm.png');
+  mask-image: url('/assets/hatch/nsm.png');
+  -webkit-mask-position: 50% 50%;
+  mask-position: 50% 50%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100%;
+  mask-size: 100%;
 `
 
 function HatchPage () {
