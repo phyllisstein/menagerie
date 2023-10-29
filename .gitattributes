@@ -1,4 +1,0 @@
-.npmrc filter=git-crypt diff=git-crypt
-.yarnrc.yml filter=git-crypt diff=git-crypt
-.env filter=git-crypt diff=git-crypt
-.envrc filter=git-crypt diff=git-crypt
