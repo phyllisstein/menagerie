@@ -1,5 +1,5 @@
 {
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "editor.formatOnSave": false,
   "editor.codeActionsOnSave": [
     "source.fixAll.stylelint",
@@ -20,16 +20,5 @@
     "**/.pnp.*": true
   },
   "prettier.enable": true,
-  "typescript.format.insertSpaceBeforeFunctionParenthesis": true,
-  "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
-  "workbench.colorCustomizations": {
-    "[Monokai Pro]": {
-      "selection.background": "#939293",
-      "editorGhostText.foreground": "#545255",
-      "editorInlayHint.background": "#403e41",
-      "editorInlayHint.foreground": "#939293",
-      "scrollbar.shadow": "#19181a"
-    },
-    "[Dracula Pro]": {}
-  }
+  "eslint.quiet": true
 }

@@ -54,6 +54,7 @@ module.exports = {
             },
           },
         ],
+        '@typescript-eslint/no-empty-function': 'off',
         // Getting lots of false positives for no-unsafe rules.
         '@typescript-eslint/no-unsafe-argument': 'off',
         '@typescript-eslint/no-unsafe-assignment': 'off',
@@ -61,7 +62,7 @@ module.exports = {
         '@typescript-eslint/no-unsafe-member-access': 'off',
         '@typescript-eslint/no-unsafe-return': 'off',
         '@typescript-eslint/no-unused-vars': [
-          'warn',
+          'error',
           {
             args: 'after-used',
             argsIgnorePattern: '^_',
@@ -115,9 +116,9 @@ module.exports = {
       'as-needed',
     ],
     'comma-dangle': ['warn', 'always-multiline'],
-    'eqeqeq': ['error', 'smart'],
+    'eqeqeq': ['warn', 'smart'],
     'import/default': 'off',
-    'import/export': 'warn',
+    'import/export': 'error',
     'import/no-named-as-default-member': 'off',
     'import/order': [
       'warn',
@@ -176,7 +177,7 @@ module.exports = {
     'sort-imports': 'off',
     'space-before-function-paren': [
       'warn',
-      'always',
+      'never',
     ],
     'template-curly-spacing': ['warn', 'always'],
   },
