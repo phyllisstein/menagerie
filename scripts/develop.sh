@@ -34,7 +34,7 @@ yarn_install() {
   echo "Running yarn install..."
   [[ -e "/run/secrets/environment" ]] || { echo "Missing environment secrets." && exit 1; }
   source /run/secrets/environment && export FONT_AWESOME_NPM_TOKEN GSAP_NPM_TOKEN GITHUB_TOKEN
-  /usr/local/bin/yarn install
+  yarn install
 }
 
 case $args in
@@ -44,14 +44,13 @@ serve)
 
 watch)
   yarn_install
-  restart_server
   configure_watches
+  restart_server
   watch_watchman
   ;;
 
 watches)
   configure_watches
-  watch_watchman
   ;;
 
 yarn)
