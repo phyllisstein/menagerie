@@ -3,7 +3,7 @@ import { useGesture } from '@use-gesture/react'
 import * as BodyScrollLock from 'body-scroll-lock'
 import { interpolate } from 'd3-interpolate'
 import { gsap } from 'gsap'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 const interpolateRotation = interpolate(-45, 45)
@@ -138,7 +138,8 @@ function HatchPage () {
       })
     }
 
-    const tl = gsap.timeline()
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: 'slow' } })
 
     if (active) {
       tl
@@ -177,6 +178,9 @@ function HatchPage () {
 
       setFrontPurple(fp => !fp)
     }
+
+      return () => ctx.revert()
+    }, containerRef)
   }
 
   useGesture(
@@ -188,7 +192,7 @@ function HatchPage () {
   )
 
   return (
-    <Container>
+    <Container ref={ containerRef }>
       <svg viewBox='0 0 10 10' width='0' height='0'>
         <defs>
           <filter id='purple-wash'>
