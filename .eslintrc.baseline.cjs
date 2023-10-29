@@ -82,6 +82,7 @@ module.exports = {
             avoidEscape: true,
           },
         ],
+        '@typescript-eslint/restrict-template-expressions': 'off',
         '@typescript-eslint/semi': [
           'warn',
           'never',

@@ -37,6 +37,7 @@ rules:
   no-eol-whitespace: null
   no-extra-semicolons: null
   no-missing-end-of-source-newline: null
+  property-no-vendor-prefix: null
   selector-max-empty-lines: 2
   string-quotes: single
   value-keyword-case: null
