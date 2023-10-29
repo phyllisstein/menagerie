@@ -1,14 +1,8 @@
-import { animated, config, useSpring } from '@react-spring/web'
 import { useGesture } from '@use-gesture/react'
 import * as BodyScrollLock from 'body-scroll-lock'
-import { interpolate } from 'd3-interpolate'
 import { gsap } from 'gsap'
 import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
-
-const interpolateRotation = interpolate(-45, 45)
-
-const AnimatedFeColorMatrix = animated('feColorMatrix')
 
 const Container = styled.div`
   position: absolute;
@@ -29,7 +23,7 @@ const MiddleVideo = styled.video`
   height: 100vh;
 
   transform: translate3d(-50%, -50%, 0);
-  filter: url(#animated-wash-2);
+  filter: url(#middle-video-wash);
 `
 
 const FrontVideo = styled.video`
@@ -41,7 +35,7 @@ const FrontVideo = styled.video`
   height: 100vh;
 
   transform: translate3d(-50%, -50%, 0);
-  filter: url(#animated-wash);
+  filter: url(#front-video-wash);
 `
 
 const MidPeephole = styled.div`
@@ -107,17 +101,18 @@ const redMatrix = `
   1     0     0     1   0
 `
 
-function HatchPage () {
+function HatchPage() {
   const containerRef = useRef(null)
   const [frontPurple, setFrontPurple] = useState(false)
 
-  const [values, api] = useSpring(() => ({
-    config: config.molasses,
-    from: {
-      washOne: identityMatrix,
-      washTwo: identityMatrix,
-    },
-  }))
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.set('#front-peephole', { rotateX: 0, rotateY: 0, z: -25 })
+      gsap.set('#mid-peephole', { rotateY: 0, z: 25 })
+    }, containerRef)
+
+    return () => ctx.revert()
+  })
 
   useEffect(() => {
     BodyScrollLock.disableBodyScroll(document.querySelector('body'))
@@ -127,55 +122,34 @@ function HatchPage () {
     }
   }, [])
 
-  const handler = ({ active, first, last, xy: [x, y] }) => {
-    const offsetX = (x - window.innerWidth) / window.innerWidth * 100 + 50
-    const offsetY = (window.innerHeight - y) / window.innerHeight * 100 - 50
-
-    if (first) {
-      api.start({
-        washOne: frontPurple ? purpleMatrix : redMatrix,
-        washTwo: frontPurple ? redMatrix : purpleMatrix,
-      })
-    }
+  const handler = ({ last, xy: [x, y] }) => {
+    const rotateX = gsap.utils.interpolate(-35, 35, y / window.innerHeight)
+    const rotateY = gsap.utils.interpolate(-35, 35, x / window.innerWidth)
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'slow' } })
+      gsap.to('#front-video-wash feColorMatrix', {
+        duration: 5,
+        attr: { values: frontPurple ? purpleMatrix : redMatrix },
+      })
+      gsap.to('#middle-video-wash feColorMatrix', {
+        duration: 5,
+        attr: { values: frontPurple ? redMatrix : purpleMatrix },
+      })
 
-      if (active) {
-        tl
-          .to('#front-peephole', {
-            rotateX: `${ offsetY }deg`,
-            rotateY: `${ offsetX }deg`,
-          }, 0)
-          .to('#mid-peephole', {
-            // perspective: (x + window.innerWidth) * 2,
-            z: `${ offsetY / 4 }rem`,
-          }, 0)
-          .to('#mid-peephole', {
-            rotateY: `${ -offsetX }deg`,
-          })
-      }
-
-      if (last) {
-        tl
-          .to('#front-peephole', {
-            rotateX: 0,
-            rotateY: 0,
-          }, 0)
-          .to('#mid-peephole', {
-            // perspective: 1000,
-            z: 0,
-            // rotateY: 0,
-          }, 0)
-          .to('#mid-peephole', {
-            rotateY: 0,
-          })
-
-        api.start({
-          washOne: identityMatrix,
-          washTwo: identityMatrix,
+      gsap
+        .to('#front-peephole', {
+          duration: 5,
+          rotateX: `${ rotateX }deg`,
+          rotateY: `${ rotateY }deg`,
         })
 
+      gsap
+        .to('#mid-peephole', {
+          duration: 5,
+          rotateY: `${ -rotateY }deg`,
+        })
+
+      if (last) {
         setFrontPurple(fp => !fp)
       }
 
@@ -203,16 +177,16 @@ function HatchPage () {
           </filter>
         </defs>
       </svg>
-      <animated.svg viewBox='0 0 10 10' width='0' height='0'>
+      <svg viewBox='0 0 10 10' width='0' height='0'>
         <defs>
-          <filter id='animated-wash'>
-            <AnimatedFeColorMatrix type='matrix' values={ values.washOne } />
+          <filter id='front-video-wash'>
+            <feColorMatrix type='matrix' values={ identityMatrix } />
           </filter>
-          <filter id='animated-wash-2'>
-            <AnimatedFeColorMatrix type='matrix' values={ values.washTwo } />
+          <filter id='middle-video-wash'>
+            <feColorMatrix type='matrix' values={ identityMatrix } />
           </filter>
         </defs>
-      </animated.svg>
+      </svg>
       <MidPeephole id='mid-peephole'>
         <MiddleVideo autoPlay loop muted playsInline>
           <source src='/assets/hatch/coverr-jeronimos-monastery-in-lisbon-portugal-6360-original.mp4' type='video/mp4' />
