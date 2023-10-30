@@ -10,14 +10,11 @@ module.exports = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  experimental: {
-    legacyBrowsers: false,
-  },
   reactStrictMode: true,
   typescript: {
     ignoreBuildErrors: true,
   },
-  webpack (config, { dev }) {
+  webpack(config, { dev }) {
     config.resolve.enforceExtension = false
     config.resolve.modules = [
       path.resolve(__dirname, 'src'),
