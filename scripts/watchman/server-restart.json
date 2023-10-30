@@ -7,7 +7,7 @@
       "anyof",
       [
         "name",
-        "next.config.cjs",
+        "next.config.js",
         "wholename"
       ],
       [
