@@ -9,7 +9,7 @@ restart_server() {
   pkill -f "yarn.js dev" || true
 
   [[ -e "/run/secrets/environment" ]] || { echo "Missing environment secrets." && exit 1; }
-  source /run/secrets/environment && export TOWER_URL TOWER_AUTH_URL TOWER_CLIENT_ID TOWER_CLIENT_SECRET NEXT_PUBLIC_GOOGLE_MAPS_API_KEY NEXT_PUBLIC_MAPBOX_API_KEY
+  source /run/secrets/environment && export GSAP_NPM_TOKEN GITHUB_TOKEN FONT_AWESOME_NPM_TOKEN
   yarn dev &
 }
 
