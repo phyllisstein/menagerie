@@ -1,6 +1,7 @@
 import { useGesture } from '@use-gesture/react'
 import * as BodyScrollLock from 'body-scroll-lock'
-import { gsap } from 'gsap'
+import gsap from 'gsap'
+import GSDevTools from 'gsap/dist/GSDevTools'
 import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
@@ -103,6 +104,7 @@ const redMatrix = `
 
 function HatchPage() {
   const containerRef = useRef(null)
+  const middleVideoRef = useRef(null)
   const [frontPurple, setFrontPurple] = useState(false)
 
   useEffect(() => {
@@ -165,6 +167,24 @@ function HatchPage() {
     { target: typeof window !== 'undefined' ? window : null },
   )
 
+  const handleVideoEnded = ev => {
+    if (!middleVideoRef?.current) return
+    // middleVideoRef.current.currentTime = 0
+    // middleVideoRef.current.play()
+
+    // const tl = gsap.timeline({
+    //   repeat: -1,
+    //   repeatDelay: 1,
+    //   yoyo: true,
+    //   paused: true,
+    // })
+    // gsap.to(middleVideoRef?.current, { attr: { currentTime: 0 }, duration: middleVideoRef?.current?.duration })
+    gsap.to(middleVideoRef?.current, { currentTime: 0, duration: middleVideoRef?.current?.duration })
+
+    // GSDevTools.create({ animation: tl, id: 'handleVideoEnd' })
+    // tl.play()
+  }
+
   return (
     <Container ref={ containerRef }>
       <svg viewBox='0 0 10 10' width='0' height='0'>
@@ -188,12 +208,12 @@ function HatchPage() {
         </defs>
       </svg>
       <MidPeephole id='mid-peephole'>
-        <MiddleVideo autoPlay loop muted playsInline>
+        <MiddleVideo autoPlay muted playsInline onEnded={ ev => handleVideoEnded(ev) } ref={ el => middleVideoRef.current = el }>
           <source src='/assets/hatch/coverr-jeronimos-monastery-in-lisbon-portugal-6360-original.mp4' type='video/mp4' />
         </MiddleVideo>
       </MidPeephole>
       <FrontPeephole id='front-peephole'>
-        <FrontVideo autoPlay loop muted playsInline>
+        <FrontVideo autoPlay muted playsInline>
           <source src='/assets/hatch/coverr-a-vinyl-disc-rotating-on-a-record-player-6767-original.mp4' type='video/mp4' />
         </FrontVideo>
       </FrontPeephole>
