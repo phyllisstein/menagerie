@@ -14,7 +14,6 @@ const Container = styled.div`
 
   transform-style: preserve-3d;
   perspective: 1000px;
-  perspective-origin: top;
 
   touch-action: none;
 `
@@ -28,7 +27,7 @@ const FrontVideo = styled.video`
   height: 50vh;
 
   transform: translate3d(-50%, -50%, 0);
-  mix-blend-mode: difference;
+  mix-blend-mode: luminosity;
 `
 
 const FrontPeephole = styled.div`
@@ -39,7 +38,8 @@ const FrontPeephole = styled.div`
   width: 50vw;
   height: 50vh;
 
-  background: #97EE86;
+  /* background: #97EE86; */
+  background: color(display-p3 0.5027 0.9638 0.3677);
   mix-blend-mode: difference;
 
   -webkit-mask-image: url('/assets/hatch/nsm.png');
@@ -61,7 +61,7 @@ const MiddleVideo = styled.video`
   height: 50vh;
 
   transform: translate3d(-50%, -50%, 0);
-  mix-blend-mode: difference;
+  mix-blend-mode: luminosity;
 `
 
 const MiddlePeephole = styled.div`
@@ -72,8 +72,9 @@ const MiddlePeephole = styled.div`
   width: 50vw;
   height: 50vh;
 
-  background: #FFCCDF;
-  mix-blend-mode: difference;
+  /* background: #FFCCDF; */
+  background: color(display-p3 0.9953 0.6757 0.8122);
+  mix-blend-mode: hue;
 
   -webkit-mask-image: url('/assets/hatch/cdm.png');
   mask-image: url('/assets/hatch/cdm.png');
