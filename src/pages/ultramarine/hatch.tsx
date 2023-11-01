@@ -1,29 +1,22 @@
 import { useGesture } from '@use-gesture/react'
 import * as BodyScrollLock from 'body-scroll-lock'
 import { gsap } from 'gsap'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 
 const Container = styled.div`
-  position: absolute;
-
-  transform: translate3d(-50%, -50%, 0);
-  transform-style: preserve-3d;
-  perspective: 1000px;
-
-  touch-action: none;
-`
-
-const MiddleVideo = styled.video`
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
 
   width: 100vw;
   height: 100vh;
 
-  transform: translate3d(-50%, -50%, 0);
-  filter: url(#middle-video-wash);
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  perspective-origin: top;
+
+  touch-action: none;
 `
 
 const FrontVideo = styled.video`
@@ -31,44 +24,23 @@ const FrontVideo = styled.video`
   top: 50%;
   left: 50%;
 
-  width: 100vw;
-  height: 100vh;
+  width: 50vw;
+  height: 50vh;
 
   transform: translate3d(-50%, -50%, 0);
-  filter: url(#front-video-wash);
-`
-
-const MidPeephole = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  width: 100vw;
-  height: 100vh;
-
-  transform-style: preserve-3d;
-  perspective: 1000px;
-
-  -webkit-mask-image: url('/assets/hatch/cdm.png');
-  mask-image: url('/assets/hatch/cdm.png');
-  -webkit-mask-position: 50% 50%;
-  mask-position: 50% 50%;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: 100%;
-  mask-size: 100%;
+  mix-blend-mode: difference;
 `
 
 const FrontPeephole = styled.div`
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 50%;
+  left: 50%;
 
-  width: 100vw;
-  height: 100vh;
+  width: 50vw;
+  height: 50vh;
 
-  transform-style: preserve-3d;
-  perspective: 1000px;
+  background: #97EE86;
+  mix-blend-mode: difference;
 
   -webkit-mask-image: url('/assets/hatch/nsm.png');
   mask-image: url('/assets/hatch/nsm.png');
@@ -80,35 +52,46 @@ const FrontPeephole = styled.div`
   mask-size: 100%;
 `
 
-const identityMatrix = `
-  1   0     0     0   0
-  0     1   0       0 0
-  0     0     1   0   0
-  0     0     0     1   0
+const MiddleVideo = styled.video`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 50vw;
+  height: 50vh;
+
+  transform: translate3d(-50%, -50%, 0);
+  mix-blend-mode: difference;
 `
 
-const purpleMatrix = `
-  1   1     0     0   0
-  0     0.5   0       0 0
-  1     0     1   0   0
-  0     0     0     1   0
-`
+const MiddlePeephole = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
 
-const redMatrix = `
-  0.5   0     0     0   0
-  0     0   0       0 0
-  0     0     0   0   0
-  1     0     0     1   0
+  width: 50vw;
+  height: 50vh;
+
+  background: #FFCCDF;
+  mix-blend-mode: difference;
+
+  -webkit-mask-image: url('/assets/hatch/cdm.png');
+  mask-image: url('/assets/hatch/cdm.png');
+  -webkit-mask-position: 50% 50%;
+  mask-position: 50% 50%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100%;
+  mask-size: 100%;
 `
 
 function HatchPage() {
   const containerRef = useRef(null)
-  const [frontPurple, setFrontPurple] = useState(false)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.set('#front-peephole', { rotateX: 0, rotateY: 0, z: -25 })
-      gsap.set('#mid-peephole', { rotateY: 0, z: 25 })
+      gsap.set('#front-peephole', { xPercent: -50, yPercent: -50, rotateX: 0, rotateY: 0, z: 25 })
+      gsap.set('#mid-peephole', { xPercent: -50, yPercent: -50, rotateY: 0, z: -25 })
     }, containerRef)
 
     return () => ctx.revert()
@@ -122,36 +105,27 @@ function HatchPage() {
     }
   }, [])
 
-  const handler = ({ last, xy: [x, y] }) => {
-    const rotateX = gsap.utils.interpolate(-35, 35, y / window.innerHeight)
-    const rotateY = gsap.utils.interpolate(-35, 35, x / window.innerWidth)
+  const handler = ({ xy: [x, y] }) => {
+    const yPercent = y / window.innerHeight
+    const xPercent = x / window.innerWidth
+    const rotateX = gsap.utils.interpolate(90, -90, yPercent)
+    const rotateY = gsap.utils.interpolate(-90, 90, xPercent)
+    const translateZ = gsap.utils.interpolate(-50, 50, yPercent)
 
     const ctx = gsap.context(() => {
-      gsap.to('#front-video-wash feColorMatrix', {
-        duration: 5,
-        attr: { values: frontPurple ? purpleMatrix : redMatrix },
-      })
-      gsap.to('#middle-video-wash feColorMatrix', {
-        duration: 5,
-        attr: { values: frontPurple ? redMatrix : purpleMatrix },
-      })
-
       gsap
         .to('#front-peephole', {
-          duration: 5,
-          rotateX: `${ rotateX }deg`,
-          rotateY: `${ rotateY }deg`,
+          duration: 1,
+          ease: 'slow',
+          transform: `translate3d(-50%, -50%, 0) translateZ(${ translateZ }vh)`,
         })
 
       gsap
         .to('#mid-peephole', {
-          duration: 5,
-          rotateY: `${ -rotateY }deg`,
+          duration: 1,
+          ease: 'slow',
+          transform: `translate3d(-50%, -50%, 0) translateZ(${ -translateZ }vh)`,
         })
-
-      if (last) {
-        setFrontPurple(fp => !fp)
-      }
 
       return () => ctx.revert()
     }, containerRef)
@@ -167,36 +141,16 @@ function HatchPage() {
 
   return (
     <Container ref={ containerRef }>
-      <svg viewBox='0 0 10 10' width='0' height='0'>
-        <defs>
-          <filter id='purple-wash'>
-            <feColorMatrix type='matrix' values={ purpleMatrix } />
-          </filter>
-          <filter id='red-wash'>
-            <feColorMatrix type='matrix' values={ redMatrix } />
-          </filter>
-        </defs>
-      </svg>
-      <svg viewBox='0 0 10 10' width='0' height='0'>
-        <defs>
-          <filter id='front-video-wash'>
-            <feColorMatrix type='matrix' values={ identityMatrix } />
-          </filter>
-          <filter id='middle-video-wash'>
-            <feColorMatrix type='matrix' values={ identityMatrix } />
-          </filter>
-        </defs>
-      </svg>
-      <MidPeephole id='mid-peephole'>
-        <MiddleVideo autoPlay loop muted playsInline>
-          <source src='/assets/hatch/coverr-jeronimos-monastery-in-lisbon-portugal-6360-original.mp4' type='video/mp4' />
-        </MiddleVideo>
-      </MidPeephole>
       <FrontPeephole id='front-peephole'>
         <FrontVideo autoPlay loop muted playsInline>
           <source src='/assets/hatch/coverr-a-vinyl-disc-rotating-on-a-record-player-6767-original.mp4' type='video/mp4' />
         </FrontVideo>
       </FrontPeephole>
+      <MiddlePeephole id='mid-peephole'>
+        <MiddleVideo autoPlay loop muted playsInline>
+          <source src='/assets/hatch/coverr-jeronimos-monastery-in-lisbon-portugal-6360-original.mp4' type='video/mp4' />
+        </MiddleVideo>
+      </MiddlePeephole>
     </Container>
   )
 }
