@@ -4,29 +4,14 @@
   {
     "name": "server-restart",
     "expression": [
-      "anyof",
+      "name",
       [
-        "name",
         "next.config.js",
-        "wholename"
-      ],
-      [
-        "name",
         "tsconfig.json",
-        "wholename"
+        "src/_app.tsx",
+        "src/_document.tsx"
       ],
-      [
-        "name",
-        "_app.tsx"
-      ],
-      [
-        "name",
-        "_document.tsx"
-      ],
-      [
-        "name",
-        "develop.sh"
-      ]
+      "wholename"
     ],
     "command": [
       "./scripts/develop.sh",

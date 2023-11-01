@@ -5,19 +5,18 @@ set -Eeuxo pipefail
 args="$*"
 
 restart_server() {
-  echo "Starting development server..."
+  echo "Terminating existing server..."
   pkill -f "yarn.js dev" || true
 
-  [[ -e "/run/secrets/environment" ]] || { echo "Missing environment secrets." && exit 1; }
-  source /run/secrets/environment && export GSAP_NPM_TOKEN GITHUB_TOKEN FONT_AWESOME_NPM_TOKEN
-  yarn dev &
+  echo "Starting server..."
+  yarn dev
+  disown
 }
 
 configure_watches() {
   echo "Configuring watches..."
 
-  watchman watch-del-all || true
-  watchman watch-project "$PWD"
+  watchman watch-project /app
   for j in scripts/watchman/*.json; do
     echo "Setting watch $j"
     watchman -j <"$j"
@@ -25,8 +24,9 @@ configure_watches() {
 }
 
 watch_watchman() {
-  pkill -f watchman || true
-  watchman --logfile=- --log-level=debug --foreground watch-project "$PWD"
+  echo "Logging watchman..."
+  configure_watches
+  tail -f /usr/local/var/run/watchman/root-state/log
 }
 
 yarn_install() {
@@ -38,13 +38,11 @@ yarn_install() {
 
 case $args in
 serve)
+  yarn_install
   restart_server
   ;;
 
 watch)
-  yarn_install
-  configure_watches
-  restart_server
   watch_watchman
   ;;
 

@@ -4,8 +4,16 @@
   {
     "name": "watchman-bootstrap",
     "expression": [
-      "dirname",
-      "scripts/watchman"
+      "anyof",
+      [
+        "dirname",
+        "scripts/watchman"
+      ],
+      [
+        "name",
+        "scripts/develop.sh",
+        "wholename"
+      ]
     ],
     "command": [
       "./scripts/develop.sh",
