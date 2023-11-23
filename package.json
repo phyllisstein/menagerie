@@ -99,7 +99,7 @@
     "typescript": "^5.2.2",
     "typescript-styled-plugin": "^0.18.2"
   },
-  "packageManager": "yarn@3.4.1",
+  "packageManager": "yarn@4.0.2",
   "resolutions": {
     "postcss": "8.4.5"
   }
