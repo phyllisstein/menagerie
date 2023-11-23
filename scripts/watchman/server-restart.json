@@ -6,15 +6,16 @@
     "expression": [
       "name",
       [
-        "next.config.js",
+        "next.config.mjs",
+        "src/pages/_app.tsx",
+        "src/pages/_document.tsx",
         "tsconfig.json",
-        "src/_app.tsx",
-        "src/_document.tsx"
+        "app.cjs"
       ],
       "wholename"
     ],
     "command": [
-      "./scripts/develop.sh",
+      "/app/scripts/develop.sh",
       "serve"
     ],
     "append_files": false

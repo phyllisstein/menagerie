@@ -5,10 +5,12 @@ set -Eeuxo pipefail
 args="$*"
 
 restart_server() {
-  echo "Terminating existing server..."
+  echo "Terminate existing server..."
   pkill -f "yarn.js dev" || true
 
-  echo "Starting server..."
+  echo "Starting development server..."
+  [[ -e "/run/secrets/environment" ]] || { echo "Missing environment secrets." && exit 1; }
+  source /run/secrets/environment && export GSAP_NPM_TOKEN FONT_AWESOME_NPM_TOKEN
   yarn dev
   disown
 }
@@ -32,13 +34,12 @@ watch_watchman() {
 yarn_install() {
   echo "Running yarn install..."
   [[ -e "/run/secrets/environment" ]] || { echo "Missing environment secrets." && exit 1; }
-  source /run/secrets/environment && export FONT_AWESOME_NPM_TOKEN GSAP_NPM_TOKEN GITHUB_TOKEN
+  source /run/secrets/environment && export FONT_AWESOME_NPM_TOKEN GSAP_NPM_TOKEN
   yarn install
 }
 
 case $args in
 serve)
-  yarn_install
   restart_server
   ;;
 
@@ -52,7 +53,6 @@ watches)
 
 yarn)
   yarn_install
-  restart_server
   ;;
 
 *)
